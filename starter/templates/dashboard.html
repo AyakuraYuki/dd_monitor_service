@@ -1,0 +1,117 @@
+{% extends 'components/base.html' %}
+
+{% block title %}DD监视器 - 仪表盘{% endblock %}
+
+{% block body_attr %}{% endblock %}
+
+{% block nav %}
+    <nav class="navbar navbar-expand-sm sticky-top navbar-dark bg-dark">
+        {% include 'components/brand.html' ignore missing %}
+
+        <div class="collapse navbar-collapse">
+            <ul class="navbar-nav mr-auto nav-pills">
+                <li class="nav-item">
+                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">返回监视器</a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+{% endblock %}
+
+{% block content %}
+    <div class="container-fluid">
+        <div class="row">
+
+            <nav class="col-md-2 d-none d-md-block sidebar p-3 d-none d-lg-block">
+                <ul class="nav flex-column nav-pills">
+                    <li class="nav-item p-1">
+                        <a class="nav-link active bg-info" href="{{ url_for('dashboard.dashboard') }}">刷新列表</a>
+                    </li>
+                    <li class="nav-item p-1">
+                        <a class="nav-link bg-success text-white" href="#"
+                           data-toggle="modal" data-target="#createModal">添加视频源
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+
+            <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
+
+                <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
+                    <h1 class="h2 text-muted">视频源列表</h1>
+                    <div class="btn-toolbar mb-2 mb-md-0">
+                        <div class="btn-group mr-2">
+                            <button class="btn btn-sm btn-outline-secondary d-md-none">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <table class="table table-striped">
+                    <thead class="thead-dark">
+                    <tr>
+{#                        <th scope="col">#</th>#}
+                        <th scope="col">标题</th>
+                        <th scope="col">链接</th>
+                        <th scope="col">--</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for link in links %}
+                        <tr>
+{#                            <th scope="row">{{ link._id }}</th>#}
+                            <td>{{ link.title | truncate(length=26, killwords=True) }}</td>
+                            <td>{{ link.link }}</td>
+                            <td>
+                                <a href="{{ url_for('dashboard.delete_link', link_id=link._id) }}"
+                                   class="btn-sm bg-danger text-light">删除</a>
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+
+            </main>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="createModal"
+         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">添加视频源</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+
+                <form action="{{ url_for('dashboard.create_link') }}" method="post">
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="title">标题</label>
+                            <input type="text" id="title" name="title" class="form-control"
+                                   placeholder="视频源描述">
+                        </div>
+                        <div class="form-group">
+                            <label for="link">链接</label>
+                            <input type="text" id="link" name="link" class="form-control"
+                                   placeholder="YouTube链接需要包含embed">
+                        </div>
+                    </div>
+
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                        <button type="submit" class="btn btn-primary">保存</button>
+                    </div>
+                </form>
+
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascript %}
+
+{% endblock %}
