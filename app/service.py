@@ -1,5 +1,5 @@
-from starter.database import get_database
-from starter.model import Link
+from app.database import get_database
+from app.model import Link
 
 
 def links(query=''):

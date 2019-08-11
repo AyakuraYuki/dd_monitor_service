@@ -2,7 +2,7 @@ from flask import (
     Blueprint, render_template
 )
 
-from starter import service
+from app import service
 
 bp = Blueprint('monitor', __name__, url_prefix='/monitor')
 

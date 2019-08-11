@@ -1,12 +1,9 @@
-import functools
-
 from flask import (
-    Blueprint, flash, g, redirect, render_template, request, session, url_for
+    Blueprint, redirect, render_template, request, url_for
 )
 
-from starter.database import get_database
-from starter.model import Link
-from starter import service
+from app import service
+from app.model import Link
 
 bp = Blueprint('dashboard', __name__, url_prefix='/_')
 
