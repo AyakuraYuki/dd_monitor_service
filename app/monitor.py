@@ -1,3 +1,5 @@
+# -*- coding: utf-8 -*-
+
 from flask import (
     Blueprint, render_template
 )
@@ -12,8 +14,6 @@ def play():
     links = service.links()
     count = len(links)
 
-    row_number = 0
-    item_number = 0
     if count % 4 == 0:
         row_number = int(count / 4)
         item_number = 4

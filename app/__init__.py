@@ -1,8 +1,11 @@
+# -*- coding: utf-8 -*-
+
 import os
 
 from flask import Flask
-from flask import url_for
 from flask import redirect
+from flask import url_for
+from flask_cors import CORS
 
 
 def create_app(test_config=None):
@@ -12,6 +15,7 @@ def create_app(test_config=None):
     :return: application instance
     """
     app = Flask(__name__, instance_relative_config=True)
+    CORS(app)
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, 'dd_monitor.db'),
         SECRET_KEY='dev' if app.debug else '2c830312-bb99-11e9-8018-6245b50a3dbc',
