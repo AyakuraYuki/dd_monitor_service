@@ -10,3 +10,10 @@ class Link:
 
     def id(self):
         return self._id
+
+    @staticmethod
+    def build(cursor_row):
+        return Link(_id=cursor_row['id'],
+                    title=cursor_row['title'],
+                    link=cursor_row['link'],
+                    sort=cursor_row['sort'])
