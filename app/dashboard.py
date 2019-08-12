@@ -28,6 +28,16 @@ def save_link():
     return redirect(url_for('dashboard.dashboard'))
 
 
+@bp.route('/save_channel_id', methods=['POST'])
+def save_link_by_channel_id():
+    form = request.form
+    title = form.get('title')
+    channel_id = form.get('channel')
+    link = f"https://www.youtube.com/embed/live_stream?channel={channel_id}"
+    link_service.insert(Link(_id=0, title=title, link=link, sort=link_service.latest_sort()))
+    return redirect(url_for('dashboard.dashboard'))
+
+
 @bp.route('/<int:link_id>/delete', methods=['GET'])
 def delete_link(link_id=0):
     link_service.delete(link_id)

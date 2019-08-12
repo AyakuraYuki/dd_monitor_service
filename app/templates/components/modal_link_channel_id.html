@@ -1,0 +1,33 @@
+<div class="modal fade" id="linkChannelIdModal"
+     tabindex="-1" role="dialog" aria-labelledby="linkChannelIdModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="linkChannelIdModalLabel">添加视频源 - 通过频道ID</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ url_for('dashboard.save_link_by_channel_id') }}" method="post">
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="视频源描述">
+                    </div>
+                    <div class="form-group">
+                        <label for="channel">YouTube频道ID</label>
+                        <input type="text" id="channel" name="channel" class="form-control" placeholder="例如UC-hM6YJuNYVAmUWxeIr9FeA">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>

@@ -25,7 +25,7 @@
             <nav class="col-md-2 d-none d-md-block sidebar p-3 d-none d-lg-block">
                 <ul class="nav flex-column nav-pills">
                     <li class="nav-item p-1">
-                        <a class="nav-link active bg-info" href="{{ url_for('dashboard.dashboard') }}">刷新列表</a>
+                        <a class="nav-link active bg-primary" href="{{ url_for('dashboard.dashboard') }}">刷新列表</a>
                     </li>
                     <li class="nav-item p-1">
                         <a href="#" class="nav-link bg-success text-white" id="createLink"
@@ -35,6 +35,12 @@
                            data-link=""
                            data-sort="0">
                             添加视频源
+                        </a>
+                    </li>
+                    <li class="nav-item p-1">
+                        <a href="#" class="nav-link bg-info text-white" id="createLinkByChannelId"
+                           data-toggle="modal" data-target="#linkChannelIdModal">
+                            添加视频源 - 频道ID
                         </a>
                     </li>
                 </ul>
@@ -55,9 +61,9 @@
                     <thead class="thead-dark">
                     <tr>
                         {#<th scope="col">#</th>#}
-                        <th scope="col">标题</th>
-                        <th scope="col">链接</th>
-                        <th scope="col">--</th>
+                        <th scope="col" width="45%">标题</th>
+                        <th scope="col" width="40%">链接</th>
+                        <th scope="col" width="15%">--</th>
                     </tr>
                     </thead>
                     <tbody>
@@ -93,6 +99,7 @@
     </div>
 
     {% include 'components/modal_link.html' %}
+    {% include 'components/modal_link_channel_id.html' %}
 {% endblock %}
 
 {% block javascript %}
