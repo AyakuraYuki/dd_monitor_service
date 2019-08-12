@@ -1,8 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import (
-    Blueprint, redirect, render_template, request, url_for
-)
+from flask import Blueprint, redirect, render_template, request, url_for
 
 from app import link_service
 from app.model import Link

@@ -12,7 +12,7 @@ def links(query=''):
     with get_database() as db:
         cursor = db.cursor().execute(sql, parameters)
         for row in cursor:
-            link = Link(_id=row['id'], title=row['title'], link=row['link'], sort=row['sort'])
+            link = Link.build(row)
             result.append(link)
 
     return result
@@ -26,9 +26,9 @@ def get_link(_id=0):
 
     with get_database() as db:
         cursor = db.cursor().execute(sql, parameters)
-        if cursor.rowcount == 1:
-            row = cursor[0]
-            link = Link(_id=row['id'], title=row['title'], link=row['link'], sort=row['sort'])
+        row = cursor.fetchone()
+        if row is not None:
+            link = Link.build(row)
         else:
             link = None
 
@@ -70,12 +70,8 @@ def delete(_id=0):
 
 
 def latest_sort():
-    sql = "SELECT count(*) + 1 FROM table_link"
+    sql = "SELECT count(*) + 1 AS 'count' FROM table_link"
     with get_database() as db:
         cursor = db.cursor().execute(sql)
-        if cursor.rowcount == 1:
-            row = cursor[0]
-            count = row[0]
-        else:
-            count = 1
+        count = cursor.fetchone()['count']
     return count
