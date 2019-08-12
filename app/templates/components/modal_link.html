@@ -1,0 +1,48 @@
+<div class="modal fade" id="linkModal"
+     tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">添加视频源</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <form action="{{ url_for('dashboard.save_link') }}" method="post">
+                <div class="modal-body">
+                    <input type="number" id="_id" name="_id" hidden="hidden">
+                    <div class="form-group">
+                        <label for="title">标题</label>
+                        <input type="text" id="title" name="title" class="form-control" placeholder="视频源描述">
+                    </div>
+                    <div class="form-group">
+                        <label for="link">链接</label>
+                        <input type="text" id="link" name="link" class="form-control" placeholder="YouTube链接需要包含embed">
+                    </div>
+                    <div class="form-group">
+                        <label for="sort">排序</label>
+                        <input type="number" id="sort" name="sort" class="form-control">
+                    </div>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                    <button type="submit" class="btn btn-primary">保存</button>
+                </div>
+            </form>
+
+        </div>
+    </div>
+</div>
+
+<script type="application/javascript">
+    function linkModalData(id) {
+        let node = document.getElementById(id);
+        document.getElementById('_id').value = node.dataset.lid;
+        document.getElementById('title').value = node.dataset.title;
+        document.getElementById('link').value = node.dataset.link;
+        document.getElementById('sort').value = node.dataset.sort;
+    }
+</script>
