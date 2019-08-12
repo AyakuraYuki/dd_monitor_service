@@ -4,18 +4,21 @@ from flask import (
     Blueprint, render_template
 )
 
-from app import service
+from app import link_service
 
 bp = Blueprint('monitor', __name__, url_prefix='/monitor')
 
 
 @bp.route('/play')
 def play():
-    links = service.links()
+    links = link_service.links()
     count = len(links)
 
-    if count % 4 == 0:
-        row_number = int(count / 4)
+    if count % 5 == 0:
+        row_number = int(count / 5) + 1
+        item_number = 5
+    elif count % 4 == 0:
+        row_number = int(count / 4) + 1
         item_number = 4
     elif count % 3 == 0:
         row_number = int(count / 3) + 1

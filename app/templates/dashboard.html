@@ -28,8 +28,13 @@
                         <a class="nav-link active bg-info" href="{{ url_for('dashboard.dashboard') }}">刷新列表</a>
                     </li>
                     <li class="nav-item p-1">
-                        <a class="nav-link bg-success text-white" href="#"
-                           data-toggle="modal" data-target="#createModal">添加视频源
+                        <a href="#" class="nav-link bg-success text-white" id="createLink"
+                           onclick="linkModalData('createLink')" data-toggle="modal" data-target="#linkModal"
+                           data-lid="0"
+                           data-title=""
+                           data-link=""
+                           data-sort="0">
+                            添加视频源
                         </a>
                     </li>
                 </ul>
@@ -49,7 +54,7 @@
                 <table class="table table-striped">
                     <thead class="thead-dark">
                     <tr>
-{#                        <th scope="col">#</th>#}
+                        {#<th scope="col">#</th>#}
                         <th scope="col">标题</th>
                         <th scope="col">链接</th>
                         <th scope="col">--</th>
@@ -58,12 +63,24 @@
                     <tbody>
                     {% for link in links %}
                         <tr>
-{#                            <th scope="row">{{ link._id }}</th>#}
-                            <td>{{ link.title | truncate(length=26, killwords=True) }}</td>
+                            {#<th scope="row">{{ link._id }}</th>#}
+                            <td>{{ link.title }}</td>
                             <td>{{ link.link }}</td>
                             <td>
+                                <a href="#" class="btn-sm bg-info text-light" id="update{{ link._id }}"
+                                   onclick="linkModalData('update{{ link._id }}')"
+                                   data-toggle="modal" data-target="#linkModal"
+                                   data-lid="{{ link._id }}"
+                                   data-title="{{ link.title }}"
+                                   data-link="{{ link.link }}"
+                                   data-sort="{{ link.sort }}">
+                                    <span>编辑</span>
+                                </a>
+                                &nbsp;
                                 <a href="{{ url_for('dashboard.delete_link', link_id=link._id) }}"
-                                   class="btn-sm bg-danger text-light">删除</a>
+                                   class="btn-sm bg-danger text-light">
+                                    <span>删除</span>
+                                </a>
                             </td>
                         </tr>
                     {% endfor %}
@@ -75,41 +92,7 @@
         </div>
     </div>
 
-    <div class="modal fade" id="createModal"
-         tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">添加视频源</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-
-                <form action="{{ url_for('dashboard.create_link') }}" method="post">
-                    <div class="modal-body">
-                        <div class="form-group">
-                            <label for="title">标题</label>
-                            <input type="text" id="title" name="title" class="form-control"
-                                   placeholder="视频源描述">
-                        </div>
-                        <div class="form-group">
-                            <label for="link">链接</label>
-                            <input type="text" id="link" name="link" class="form-control"
-                                   placeholder="YouTube链接需要包含embed">
-                        </div>
-                    </div>
-
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                        <button type="submit" class="btn btn-primary">保存</button>
-                    </div>
-                </form>
-
-            </div>
-        </div>
-    </div>
+    {% include 'components/modal_link.html' %}
 {% endblock %}
 
 {% block javascript %}

@@ -6,13 +6,13 @@ from app.model import Link
 
 def links(query=''):
     result = []
-    sql = "select * from table_link where title like '%' || ? || '%'"
+    sql = "SELECT * FROM table_link WHERE title LIKE '%' || ? || '%' ORDER BY sort"
     parameters = (query,)
 
     with get_database() as db:
         cursor = db.cursor().execute(sql, parameters)
         for row in cursor:
-            link = Link(_id=row['id'], title=row['title'], link=row['link'])
+            link = Link(_id=row['id'], title=row['title'], link=row['link'], sort=row['sort'])
             result.append(link)
 
     return result
@@ -21,14 +21,14 @@ def links(query=''):
 def get_link(_id=0):
     if _id == 0:
         return None
-    sql = "select * from table_link where id = ?"
+    sql = "SELECT * FROM table_link WHERE id = ?"
     parameters = (_id,)
 
     with get_database() as db:
         cursor = db.cursor().execute(sql, parameters)
-        if len(cursor) == 1:
+        if cursor.rowcount == 1:
             row = cursor[0]
-            link = Link(_id=row['id'], title=row['title'], link=row['link'])
+            link = Link(_id=row['id'], title=row['title'], link=row['link'], sort=row['sort'])
         else:
             link = None
 
@@ -48,14 +48,34 @@ def __update(sql='', parameters=None):
 def insert(link: Link = None):
     if link is None:
         return 0
-    sql = "insert into table_link (title, link) VALUES (?, ?)"
-    parameters = (link.title, link.link,)
+    sql = "INSERT INTO table_link (title, link, sort) VALUES (?, ?, ?)"
+    parameters = (link.title, link.link, link.sort,)
+    return __update(sql, parameters)
+
+
+def update(link: Link = None):
+    if link is None:
+        return 0
+    sql = "UPDATE table_link SET title = ?, link = ?, sort = ? WHERE id = ?"
+    parameters = (link.title, link.link, link.sort, link.id(),)
     return __update(sql, parameters)
 
 
 def delete(_id=0):
     if _id == 0:
         return 0
-    sql = "delete from table_link where id = ?"
+    sql = "DELETE FROM table_link WHERE id = ?"
     parameters = (_id,)
     return __update(sql, parameters)
+
+
+def latest_sort():
+    sql = "SELECT count(*) + 1 FROM table_link"
+    with get_database() as db:
+        cursor = db.cursor().execute(sql)
+        if cursor.rowcount == 1:
+            row = cursor[0]
+            count = row[0]
+        else:
+            count = 1
+    return count

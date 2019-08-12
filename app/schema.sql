@@ -1,7 +1,7 @@
-drop table if exists table_link;
-create table table_link
-(
-    id    integer primary key autoincrement,
+DROP TABLE IF EXISTS table_link;
+CREATE TABLE table_link (
+    id    INTEGER PRIMARY KEY AUTOINCREMENT,
     title string,
-    link  string not null
+    link  string,
+    sort  INTEGER
 );
