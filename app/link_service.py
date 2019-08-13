@@ -12,7 +12,7 @@ def links(query=''):
     with get_database() as db:
         cursor = db.cursor().execute(sql, parameters)
         for row in cursor:
-            link = Link.build(row)
+            link = Link.orm(row)
             result.append(link)
 
     return result
@@ -28,7 +28,7 @@ def get_link(_id=0):
         cursor = db.cursor().execute(sql, parameters)
         row = cursor.fetchone()
         if row is not None:
-            link = Link.build(row)
+            link = Link.orm(row)
         else:
             link = None
 

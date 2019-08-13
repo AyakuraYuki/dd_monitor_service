@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, redirect, render_template, request, url_for
+from flask import Blueprint, redirect, render_template, request, url_for, jsonify
 
 from app import link_service
-from app.model import Link
+from app.model import Link, to_json
 
 bp = Blueprint('dashboard', __name__, url_prefix='/_')
 
@@ -42,3 +42,11 @@ def save_link_by_channel_id():
 def delete_link(link_id=0):
     link_service.delete(link_id)
     return redirect(url_for('dashboard.dashboard'))
+
+
+@bp.route('/get', methods=['POST'])
+def get_link():
+    form = request.form
+    _id = form.get('id')
+    link = link_service.get_link(_id)
+    return jsonify(to_json(link))
