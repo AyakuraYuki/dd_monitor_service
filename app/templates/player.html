@@ -1,6 +1,6 @@
 {% extends 'components/base.html' %}
 
-{% block title %}DD监视器{% endblock %}
+{% block title %}DD Monitor - Player{% endblock %}
 
 {% block body_attr %}class="bg-dark"{% endblock %}
 
@@ -11,10 +11,10 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">刷新页面</a>
+                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">Reload</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('dashboard.dashboard') }}" target="_blank">编辑视频源</a>
+                    <a class="nav-link" href="{{ url_for('dashboard.dashboard') }}" target="_blank">Sauces</a>
                 </li>
             </ul>
         </div>
