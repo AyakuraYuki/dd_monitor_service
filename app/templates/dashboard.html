@@ -29,11 +29,8 @@
                     </li>
                     <li class="nav-item p-1">
                         <a href="#" class="nav-link bg-success text-white" id="createLink"
-                           onclick="linkModalData('createLink')" data-toggle="modal" data-target="#linkModal"
-                           data-lid="0"
-                           data-title=""
-                           data-link=""
-                           data-sort="0">
+                           onclick="linkModalData('{{ url_for('dashboard.get_link', link_id=0) }}')"
+                           data-toggle="modal" data-target="#linkModal">
                             添加视频源
                         </a>
                     </li>
@@ -74,17 +71,13 @@
                             <td>{{ link.link }}</td>
                             <td>
                                 <a href="#" class="btn-sm bg-info text-light" id="update{{ link._id }}"
-                                   onclick="linkModalData('update{{ link._id }}')"
-                                   data-toggle="modal" data-target="#linkModal"
-                                   data-lid="{{ link._id }}"
-                                   data-title="{{ link.title }}"
-                                   data-link="{{ link.link }}"
-                                   data-sort="{{ link.sort }}">
+                                   onclick="linkModalData('{{ url_for('dashboard.get_link', link_id=link._id) }}')"
+                                   data-toggle="modal" data-target="#linkModal">
                                     <span>编辑</span>
                                 </a>
                                 &nbsp;
-                                <a href="{{ url_for('dashboard.delete_link', link_id=link._id) }}"
-                                   class="btn-sm bg-danger text-light">
+                                <a href="#" class="btn-sm bg-danger text-light"
+                                   onclick="axios.delete('{{ url_for('dashboard.delete_link', link_id=link._id) }}').then(()=>location.reload())">
                                     <span>删除</span>
                                 </a>
                             </td>

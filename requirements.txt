@@ -2,3 +2,4 @@ click
 flask
 python-dotenv
 flask_cors
+flask_babel

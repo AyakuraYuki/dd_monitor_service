@@ -38,11 +38,13 @@
 </div>
 
 <script type="application/javascript">
-    function linkModalData(id) {
-        let node = document.getElementById(id);
-        document.getElementById('_id').value = node.dataset.lid;
-        document.getElementById('title').value = node.dataset.title;
-        document.getElementById('link').value = node.dataset.link;
-        document.getElementById('sort').value = node.dataset.sort;
+    function linkModalData(uri) {
+        axios.get(uri).then(res => {
+            let link = res.data.link;
+            $("#_id").val(link && link._id ? link._id : 0);
+            $("#title").val(link && link.title ? link.title : "");
+            $("#link").val(link && link.link ? link.link : "");
+            $("#sort").val(link && link.sort ? link.sort : 0);
+        })
     }
 </script>

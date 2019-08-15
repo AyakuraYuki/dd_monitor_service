@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.database import get_database
+from app.database import get_database, execute_update
 from app.model import Link
 
 
@@ -35,38 +35,31 @@ def get_link(_id=0):
     return link
 
 
-def __update(sql='', parameters=None):
-    if sql == '' or ('?' in sql and parameters is None):
-        return 0
-    with get_database() as db:
-        cursor = db.cursor().execute(sql, parameters)
-        row_count = cursor.rowcount
-        db.commit()
-    return row_count
-
-
 def insert(link: Link = None):
-    if link is None:
+    if link:
+        sql = "INSERT INTO table_link (title, link, sort) VALUES (?, ?, ?)"
+        parameters = (link.title, link.link, link.sort,)
+        return execute_update(sql, parameters)
+    else:
         return 0
-    sql = "INSERT INTO table_link (title, link, sort) VALUES (?, ?, ?)"
-    parameters = (link.title, link.link, link.sort,)
-    return __update(sql, parameters)
 
 
 def update(link: Link = None):
-    if link is None:
+    if link:
+        sql = "UPDATE table_link SET title = ?, link = ?, sort = ? WHERE id = ?"
+        parameters = (link.title, link.link, link.sort, link.id(),)
+        return execute_update(sql, parameters)
+    else:
         return 0
-    sql = "UPDATE table_link SET title = ?, link = ?, sort = ? WHERE id = ?"
-    parameters = (link.title, link.link, link.sort, link.id(),)
-    return __update(sql, parameters)
 
 
 def delete(_id=0):
-    if _id == 0:
+    if _id:
+        sql = "DELETE FROM table_link WHERE id = ?"
+        parameters = (_id,)
+        return execute_update(sql, parameters)
+    else:
         return 0
-    sql = "DELETE FROM table_link WHERE id = ?"
-    parameters = (_id,)
-    return __update(sql, parameters)
 
 
 def latest_sort():

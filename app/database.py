@@ -18,6 +18,16 @@ def get_database():
     return g.application_database
 
 
+def execute_update(sql='', parameters=None):
+    if sql == '' or ('?' in sql and parameters is None):
+        return 0
+    with get_database() as db:
+        cursor = db.cursor().execute(sql, parameters)
+        row_count = cursor.rowcount
+        db.commit()
+    return row_count
+
+
 def close_database(exception=None):
     database = g.pop('application_database', None)
     if database is not None:

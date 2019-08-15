@@ -33,20 +33,20 @@ def save_link_by_channel_id():
     form = request.form
     title = form.get('title')
     channel_id = form.get('channel')
+    channel_id = str(channel_id).replace('https://www.youtube.com/channel/', '')
     link = f"https://www.youtube.com/embed/live_stream?channel={channel_id}"
     link_service.insert(Link(_id=0, title=title, link=link, sort=link_service.latest_sort()))
     return redirect(url_for('dashboard.dashboard'))
 
 
-@bp.route('/<int:link_id>/delete', methods=['GET'])
+@bp.route('/link/<int:link_id>', methods=['GET'])
+def get_link(link_id=0):
+    link = link_service.get_link(link_id)
+    return jsonify({'link': to_json(link)})
+
+
+@bp.route('/link/<int:link_id>', methods=['DELETE'])
 def delete_link(link_id=0):
     link_service.delete(link_id)
-    return redirect(url_for('dashboard.dashboard'))
-
-
-@bp.route('/get', methods=['POST'])
-def get_link():
-    form = request.form
-    _id = form.get('id')
-    link = link_service.get_link(_id)
-    return jsonify(to_json(link))
+    links = link_service.links()
+    return jsonify({'list': to_json(links)})
