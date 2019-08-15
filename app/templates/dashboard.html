@@ -1,6 +1,6 @@
 {% extends 'components/base.html' %}
 
-{% block title %}DD Monitor - Dashboard{% endblock %}
+{% block title %}{{ _('Site_Title_Dashboard') }}{% endblock %}
 
 {% block body_attr %}{% endblock %}
 
@@ -11,7 +11,30 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">返回监视器</a>
+                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">
+                        {{ _('Nav_Back_To_Player') }}
+                    </a>
+                </li>
+            </ul>
+            <ul class="navbar-nav justify-content-end">
+                <li class="nav-item dropdown">
+                    <a href="#" class="nav-link dropdown-toggle" role="button"
+                       data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{ _('Nav_Dropdown') }}
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item" href="{{ url_for('dashboard.language', lang='ja') }}">
+                            {{ _('Nav_Lang_Japanese') }}
+                        </a>
+                        <a class="dropdown-item" href="{{ url_for('dashboard.language', lang='zh') }}">
+                            {{ _('Nav_Lang_Chinese') }}
+                        </a>
+                        <a class="dropdown-item" href="{{ url_for('dashboard.language', lang='en') }}">
+                            {{ _('Nav_Lang_English') }}
+                        </a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item disabled" href="#">{{ lang }}</a>
+                    </div>
                 </li>
             </ul>
         </div>
@@ -25,19 +48,21 @@
             <nav class="col-md-2 d-none d-md-block sidebar p-3 d-none d-lg-block">
                 <ul class="nav flex-column nav-pills">
                     <li class="nav-item p-1">
-                        <a class="nav-link active bg-primary" href="{{ url_for('dashboard.dashboard') }}">刷新列表</a>
+                        <a class="nav-link active bg-primary" href="{{ url_for('dashboard.dashboard') }}">
+                            {{ _('Sidebar_Refresh') }}
+                        </a>
                     </li>
                     <li class="nav-item p-1">
                         <a href="#" class="nav-link bg-success text-white" id="createLink"
                            onclick="linkModalData('{{ url_for('dashboard.get_link', link_id=0) }}')"
                            data-toggle="modal" data-target="#linkModal">
-                            添加视频源
+                            {{ _('Sidebar_Add_Video_Source') }}
                         </a>
                     </li>
                     <li class="nav-item p-1">
                         <a href="#" class="nav-link bg-info text-white" id="createLinkByChannelId"
                            data-toggle="modal" data-target="#linkChannelIdModal">
-                            添加视频源 - 频道ID
+                            {{ _('Sidebar_Add_Video_Source_By_Channel_Id') }}
                         </a>
                     </li>
                 </ul>
@@ -46,7 +71,9 @@
             <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
 
                 <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pb-2 mb-3 border-bottom">
-                    <h1 class="h2 text-muted">视频源列表</h1>
+                    <h1 class="h2 text-muted">
+                        {{ _('Table_Links_Title') }}
+                    </h1>
                     <div class="btn-toolbar mb-2 mb-md-0">
                         <div class="btn-group mr-2">
                             <button class="btn btn-sm btn-outline-secondary d-md-none">+</button>
@@ -58,8 +85,8 @@
                     <thead class="thead-dark">
                     <tr>
                         {#<th scope="col">#</th>#}
-                        <th scope="col" width="45%">标题</th>
-                        <th scope="col" width="40%">链接</th>
+                        <th scope="col" width="45%">{{ _('Table_Column_Title') }}</th>
+                        <th scope="col" width="40%">{{ _('Table_Column_Link') }}</th>
                         <th scope="col" width="15%">--</th>
                     </tr>
                     </thead>
@@ -73,12 +100,12 @@
                                 <a href="#" class="btn-sm bg-info text-light" id="update{{ link._id }}"
                                    onclick="linkModalData('{{ url_for('dashboard.get_link', link_id=link._id) }}')"
                                    data-toggle="modal" data-target="#linkModal">
-                                    <span>编辑</span>
+                                    <span>{{ _('Table_Row_Operation_Edit') }}</span>
                                 </a>
                                 &nbsp;
                                 <a href="#" class="btn-sm bg-danger text-light"
                                    onclick="axios.delete('{{ url_for('dashboard.delete_link', link_id=link._id) }}').then(()=>location.reload())">
-                                    <span>删除</span>
+                                    <span>{{ _('Table_Row_Operation_Delete') }}</span>
                                 </a>
                             </td>
                         </tr>

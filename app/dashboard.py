@@ -2,16 +2,23 @@
 
 from flask import Blueprint, redirect, render_template, request, url_for, jsonify
 
-from app import link_service
+from app import link_service, const
 from app.model import Link, to_json
 
 bp = Blueprint('dashboard', __name__, url_prefix='/_')
 
 
+@bp.route('/language/<string:lang>')
+def language(lang=''):
+    if lang:
+        const.language = lang
+    return redirect(url_for('dashboard.dashboard'))
+
+
 @bp.route('/index')
 def dashboard():
     links = link_service.links()
-    return render_template('dashboard.html', links=links)
+    return render_template('dashboard.html', links=links, lang=const.current_lang())
 
 
 @bp.route('/save', methods=['POST'])

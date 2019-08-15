@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask, redirect, request, url_for
+from flask import Flask, redirect, url_for
 from flask_babel import Babel
 from flask_cors import CORS
 
@@ -19,6 +19,7 @@ def create_app(test_config=None):
         DATABASE=os.path.join(app.instance_path, 'dd_monitor.db'),
         SECRET_KEY='dev' if app.debug else '2c830312-bb99-11e9-8018-6245b50a3dbc',
         LANGUAGES=['zh', 'ja', 'en'],
+        BABEL_DEFAULT_LOCALE='en',
     )
 
     # load the instance config if it is exists, when not testing
@@ -38,7 +39,9 @@ def create_app(test_config=None):
 
     @babel.localeselector
     def get_locale():
-        return request.accept_languages.best_match(app.config['LANGUAGES'])
+        # return request.accept_languages.best_match(app.config['LANGUAGES'])
+        from app.const import language
+        return language
 
     # database
     from . import database

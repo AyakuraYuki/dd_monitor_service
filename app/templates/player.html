@@ -1,6 +1,6 @@
 {% extends 'components/base.html' %}
 
-{% block title %}DD Monitor - Player{% endblock %}
+{% block title %}{{ _('Site_Title_Player') }}{% endblock %}
 
 {% block body_attr %}class="bg-dark"{% endblock %}
 
@@ -11,10 +11,14 @@
         <div class="collapse navbar-collapse">
             <ul class="navbar-nav mr-auto nav-pills">
                 <li class="nav-item">
-                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">Reload</a>
+                    <a class="nav-link active bg-info" href="{{ url_for('monitor.play') }}">
+                        {{ _('Nav_Reload') }}
+                    </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for('dashboard.dashboard') }}" target="_blank">Sauces</a>
+                    <a class="nav-link" href="{{ url_for('dashboard.dashboard') }}" target="_blank">
+                        {{ _('Nav_Sauces') }}
+                    </a>
                 </li>
             </ul>
         </div>
