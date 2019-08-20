@@ -50,11 +50,21 @@ def create_app(test_config=None):
     # router mapping
     @app.route('/')
     def hello():
+        # return render_template('index.html')
         return redirect(url_for('monitor.play'))
 
     # blueprint
-    from . import monitor, dashboard
+    from app.blueprint import dashboard
+    from app.blueprint import monitor
     app.register_blueprint(monitor.bp)
     app.register_blueprint(dashboard.bp)
+
+    # blueprint - restful
+    from app.api import player_api
+    from app.api import link_api
+    from app.api import channel_api
+    app.register_blueprint(player_api.bp)
+    app.register_blueprint(link_api.bp)
+    app.register_blueprint(channel_api.bp)
 
     return app

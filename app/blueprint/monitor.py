@@ -4,14 +4,14 @@ from flask import (
     Blueprint, render_template
 )
 
-from app import link_service
+from app.bridge import link_bridge
 
 bp = Blueprint('monitor', __name__, url_prefix='/monitor')
 
 
 @bp.route('/play')
 def play():
-    links = link_service.links()
+    links = link_bridge.links()
     count = len(links)
 
     if count % 5 == 0:
