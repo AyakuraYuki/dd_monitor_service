@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import os
+import sqlite3
 
+from DBUtils.PersistentDB import PersistentDB
 from flask import Flask, redirect, url_for
 from flask_babel import Babel
 from flask_cors import CORS
@@ -17,9 +19,13 @@ def create_app(test_config=None):
     CORS(app)
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, 'dd_monitor.db'),
-        SECRET_KEY='dev' if app.debug else '2c830312-bb99-11e9-8018-6245b50a3dbc',
+        SECRET_KEY='dev' if app.debug else '8428bc0d90194a9787e838c96596a6bb',
         LANGUAGES=['zh', 'ja', 'en'],
         BABEL_DEFAULT_LOCALE='en',
+        DBCP=PersistentDB(
+            creator=sqlite3,
+            database=os.path.join(app.instance_path, 'dd_monitor.db'),
+        ),
     )
 
     # load the instance config if it is exists, when not testing

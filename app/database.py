@@ -8,11 +8,23 @@ from flask import g
 from flask.cli import with_appcontext
 
 
+class SQLiteConnection:
+    def __enter__(self):
+        __cp = current_app.config['DBCP']
+        self.conn = __cp.connection()
+        self.cursor = self.conn.cursor()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        self.cursor.close()
+        self.conn.close()
+
+
 def get_database():
     if 'application_database' not in g:
         g.application_database = sqlite3.connect(
             current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES
+            detect_types=sqlite3.PARSE_DECLTYPES,
         )
         g.application_database.row_factory = sqlite3.Row
     return g.application_database
