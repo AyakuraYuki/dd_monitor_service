@@ -3,30 +3,9 @@
 import sqlite3
 
 import click
-from DBUtils.PooledDB import PooledDB
 from flask import current_app
 from flask import g
 from flask.cli import with_appcontext
-
-from app.const import Singleton
-
-
-class SQLiteCP(metaclass=Singleton):
-    __pool = None
-
-    def connection(self):
-        if self.__pool is None:
-            self.__pool = PooledDB(
-                creator=sqlite3,
-                mincached=10,
-                maxcached=50,
-                maxshared=20,
-                maxconnections=100,
-                blocking=True,
-                maxusage=0,
-                database=current_app.config['DATABASE']
-            )
-        return self.__pool.connection()
 
 
 def get_database():
