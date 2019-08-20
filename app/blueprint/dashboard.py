@@ -19,7 +19,7 @@ def language(lang=''):
 @bp.route('/index')
 def dashboard():
     links = link_bridge.links()
-    return render_template('dashboard.html', links=links, lang=const.current_lang())
+    return render_template('dashboard.html', links=links, lang=const.current_lang_literal())
 
 
 @bp.route('/save', methods=['POST'])
