@@ -2,8 +2,8 @@ import Vue from 'vue'
 import Router from 'vue-router'
 
 const routerMapping = [
-    {path: '/', component: 'Home'},
-    {path: '/about', component: 'About'}
+    {path: '/', component: 'Monitor'},
+    {path: '/_', component: 'Dashboard'}
 ]
 
 const routes = routerMapping.map(route => {
