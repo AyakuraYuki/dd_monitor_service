@@ -35,8 +35,8 @@ def links():
     """
     method = request.method
     if method == 'POST':
-        form = request.form
-        query = form.get('query')
+        data = request.json
+        query = data.get('query')
     else:
         query = ''
     link_list = link_bridge.links(query)
@@ -101,9 +101,9 @@ def save_by_channel():
             }
         }
     """
-    form = request.form
-    title = form.get('title')
-    channel_id = form.get('channel')
+    data = request.json
+    title = data.get('title')
+    channel_id = data.get('channel')
     channel_id = str(channel_id).replace('https://www.youtube.com/channel/', '')
     url = f"https://www.youtube.com/embed/live_stream?channel={channel_id}"
     link = Link(_id=0, title=title, link=url, sort=link_bridge.latest_sort())

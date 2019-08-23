@@ -34,8 +34,8 @@ def channels():
     """
     method = request.method
     if method == 'POST':
-        form = request.form
-        query = form.get('query')
+        data = request.json
+        query = data.get('query')
     else:
         query = ''
     channel_list = channel_bridge.channels(query)
