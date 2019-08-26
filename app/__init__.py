@@ -17,6 +17,7 @@ def create_app(test_config=None):
     """
     app = Flask(__name__, instance_relative_config=True)
     CORS(app)
+
     app.config.from_mapping(
         DATABASE=os.path.join(app.instance_path, 'dd_monitor.db'),
         SECRET_KEY='dev' if app.debug else '8428bc0d90194a9787e838c96596a6bb',
@@ -45,25 +46,14 @@ def create_app(test_config=None):
 
     @babel.localeselector
     def get_locale():
-        # return request.accept_languages.best_match(app.config['LANGUAGES'])
         from app.const import language
         return language
 
     # database
     from . import database
     database.init_app(app)
-
-    # router mapping
-    @app.route('/')
-    def index():
-        return render_template('index.html')
-        # return redirect(url_for('monitor.play'))
-
-    # blueprint
-    from app.blueprint import monitor
-    from app.blueprint import dashboard
-    app.register_blueprint(monitor.bp)
-    app.register_blueprint(dashboard.bp)
+    if not os.path.exists(app.config['DATABASE']):
+        raise FileExistsError('Database instance is not exist, use `flask init-schemas` to create one.')
 
     # blueprint - restful
     from app.api import rest
@@ -74,5 +64,10 @@ def create_app(test_config=None):
     app.register_blueprint(link_api.bp)
     app.register_blueprint(player_api.bp)
     app.register_blueprint(vue_api.bp)
+
+    # web entry
+    @app.route('/')
+    def index():
+        return render_template('index.html')
 
     return app
