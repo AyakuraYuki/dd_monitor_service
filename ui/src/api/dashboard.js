@@ -3,17 +3,18 @@ import api from './api'
 // region Link
 
 export const linkList = ({ query }) => {
-    const uri = '/_/link/list'
-    return api.post(uri, { query })
-}
-
-export const simpleGetLinkList = () => {
-    const uri = '/_/link/list'
-    return api.get(uri)
+    const uri = '/_/link'
+    const params = {}
+    if (query !== '') {
+        params.query = query
+    }
+    return api.get(uri, {
+        params: params
+    })
 }
 
 export const saveLink = ({ title, link }) => {
-    const uri = '/_/link/save'
+    const uri = '/_/link'
     return api.post(uri, { title, link })
 }
 
@@ -22,14 +23,14 @@ export const saveLinkByChannel = ({ title, channel }) => {
     return api.post(uri, { title, channel })
 }
 
-export const updateLink = (linkId, { title, link, sort }) => {
-    const uri = `/_/link/lid/${linkId}`
-    return api.put(uri, { title, link, sort })
-}
-
 export const getLink = (linkId) => {
     const uri = `/_/link/lid/${linkId}`
     return api.get(uri)
+}
+
+export const updateLink = (linkId, { title, link, sort }) => {
+    const uri = `/_/link/lid/${linkId}`
+    return api.put(uri, { title, link, sort })
 }
 
 export const deleteLink = (linkId) => {
@@ -41,29 +42,30 @@ export const deleteLink = (linkId) => {
 
 // region Channel
 
-export const channelList = ({ query }) => {
-    const uri = '/_/channel/list'
-    return api.post(uri, { query })
-}
-
-export const simpleGetChannelList = () => {
-    const uri = '/_/channel/list'
-    return api.get(uri)
+export const channelList = (query) => {
+    const uri = '/_/channel'
+    const params = {}
+    if (query) {
+        params.query = query
+    }
+    return api.get(uri, {
+        params: params
+    })
 }
 
 export const saveChannel = ({ name, channelId }) => {
-    const uri = '/_/channel/save'
+    const uri = '/_/channel'
     return api.post(uri, { name, channelId })
-}
-
-export const updateChannel = (cid, { name, channelId }) => {
-    const uri = `/_/channel/cid/${cid}`
-    return api.put(uri, { name, channelId })
 }
 
 export const getChannel = (cid) => {
     const uri = `/_/channel/cid/${cid}`
     return api.get(uri)
+}
+
+export const updateChannel = (cid, { name, channelId }) => {
+    const uri = `/_/channel/cid/${cid}`
+    return api.put(uri, { name, channelId })
 }
 
 export const deleteChannel = (cid) => {

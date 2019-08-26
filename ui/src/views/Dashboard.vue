@@ -4,7 +4,7 @@
             <div id="sidebar" class="sidebar col-md-2 d-none d-md-block sidebar p-3 d-none d-lg-block">
                 <b-nav vertical class="nav-pills">
                     <b-nav-item class="p-1">
-                        <b-button block variant="primary" @click="fetchSimpleLinkList">Refresh</b-button>
+                        <b-button block variant="primary" @click="fetchLinkList">Refresh</b-button>
                     </b-nav-item>
                     <b-nav-item class="p-1">
                         <b-button v-b-modal.edit-link block variant="success" @click="createLink">
@@ -43,8 +43,8 @@
                 </b-table>
             </main>
 
-            <modal-edit-link @update:linkList="fetchSimpleLinkList" :item="modalEdit.item" :method="modalEdit.method"/>
-            <modal-save-link-by-channel @update:linkList="fetchSimpleLinkList"/>
+            <modal-edit-link @update:linkList="fetchLinkList" :item="modalEdit.item" :method="modalEdit.method"/>
+            <modal-save-link-by-channel @update:linkList="fetchLinkList"/>
         </div>
     </div>
 </template>
@@ -52,7 +52,7 @@
 <script>
     import ModalEditLink from "../components/dashboard/ModalEditLink"
     import ModalSaveLinkByChannel from "../components/dashboard/ModalSaveLinkByChannel"
-    import { linkList, simpleGetLinkList, deleteLink } from "../api/dashboard"
+    import { linkList, deleteLink } from "../api/dashboard"
 
     export default {
         name: "Dashboard",
@@ -86,12 +86,6 @@
                     this.linkList = data.list
                 })
             },
-            fetchSimpleLinkList() {
-                simpleGetLinkList().then(res => {
-                    let data = res.data
-                    this.linkList = data.list
-                })
-            },
             deleteLink(lid) {
                 deleteLink(lid).then(() => {
                     this.fetchLinkList()
@@ -106,7 +100,7 @@
             }
         },
         mounted() {
-            this.fetchSimpleLinkList()
+            this.fetchLinkList()
             document.body.classList.remove('bg-dark')
         }
     }

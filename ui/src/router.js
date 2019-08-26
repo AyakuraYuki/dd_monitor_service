@@ -6,6 +6,7 @@ const routerMapping = [
     {path: '/_', component: 'Dashboard'}
 ]
 
+// General router mapper
 const routes = routerMapping.map(route => {
     return {
         ...route,

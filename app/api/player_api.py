@@ -3,7 +3,6 @@
 from flask import Blueprint, jsonify
 
 from app.bridge import link_bridge
-from app.model import to_json
 
 bp = Blueprint('api.player', __name__, url_prefix='/player')
 
