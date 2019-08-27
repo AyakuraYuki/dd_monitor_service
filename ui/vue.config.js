@@ -4,5 +4,5 @@ module.exports = {
     // Disable source map.
     productionSourceMap: false,
     // Disable filename hash
-    filenameHashing: false
+    filenameHashing: true
 }
