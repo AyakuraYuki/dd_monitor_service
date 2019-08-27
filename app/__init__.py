@@ -52,8 +52,6 @@ def create_app(test_config=None):
     # database
     from . import database
     database.init_app(app)
-    if not os.path.exists(app.config['DATABASE']):
-        raise FileExistsError('Database instance is not exist, use `flask init-schemas` to create one.')
 
     # blueprint - restful
     from app.api import rest
