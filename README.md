@@ -27,7 +27,7 @@ DD监视器，你要来当监视房里的老大爷吗？这个工具可以让你
 
 ### Get source codes
 
-```shell script
+```bash
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
@@ -52,7 +52,7 @@ cd dd_monitor
 >
 > To continue, make sure you have `Python 3.7.x`.
 
-```shell script
+```bash
 pip install virtualenv
 ```
 
@@ -64,7 +64,7 @@ If you use virtualenv, run the following script before build the environment.
 
 * Linux/macOS
 
-```shell script
+```bash
 virtualenv venv
 source venv/bin/activate
 ```
@@ -80,7 +80,7 @@ After prepared Python or virtualenv, and Node, use the following scripts to buil
 
 > Here I presented a script called `build.sh` for Linux/macOS, soon I'll make a `build.bat` for Windows users.
 
-```shell script
+```bash
 pip install -r requirements.txt
 chmod +x build.sh
 ./build.sh
@@ -90,7 +90,7 @@ chmod +x build.sh
 
 You need to create a sqlite database file, use this script to continue.
 
-```shell script
+```bash
 flask init-schemas
 ```
 
@@ -98,7 +98,7 @@ flask init-schemas
 
 I didn't package this program, I'll do this stuff if I have time to.
 
-```shell script
+```bash
 flask run
 ```
 
@@ -108,7 +108,7 @@ And now, visit http://127.0.0.1:5140
 
 ### 获取源代码
 
-```shell script
+```bash
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
@@ -133,7 +133,7 @@ cd dd_monitor
 >
 > 在继续之前，确保你安装的Python大于3.7.x版本
 
-```shell script
+```bash
 pip install virtualenv
 ```
 
@@ -145,7 +145,7 @@ pip install virtualenv
 
 * Linux/macOS
 
-```shell script
+```bash
 virtualenv venv
 source venv/bin/activate
 ```
@@ -161,7 +161,7 @@ venv/Scripts/activate
 
 > 这里我为Linux/macOS用户准备了`build.sh`构建运行环境，之后我会很快为Windows用户准备`build.bat`
 
-```shell script
+```bash
 pip install -r requirements.txt
 chmod +x build.sh
 ./build.sh
@@ -171,7 +171,7 @@ chmod +x build.sh
 
 运行之前你需要用下面的命令创建sqlite存储库
 
-```shell script
+```bash
 flask init-schemas
 ```
 
@@ -179,7 +179,7 @@ flask init-schemas
 
 我还没有打包这个工具，如果我有时间我会去做的，现在暂时用flask直接运行
 
-```shell script
+```bash
 flask run
 ```
 
