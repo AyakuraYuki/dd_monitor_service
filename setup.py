@@ -26,5 +26,9 @@ setuptools.setup(
         'click',
         'flask',
         'python-dotenv',
+        'flask_cors',
+        'flask_babel',
+        'flask_restful',
+        'DBUtils',
     ],
 )
