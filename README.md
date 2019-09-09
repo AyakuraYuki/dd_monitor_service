@@ -19,11 +19,21 @@ DD监视器，你要来当监视房里的老大爷吗？这个工具可以让你
 ## Environment
 
 <p>
-    <img src="https://img.shields.io/badge/Python-3.7.4-blue?logo=python&style=flat-square">
-    <img src="https://img.shields.io/badge/Flask-1.1.1-blue?logo=flask&style=flat-square">
-    <img src="https://img.shields.io/badge/sqlite3-3.24.0-green?logo=sqlite&style=flat-square">
-    <img src="https://img.shields.io/badge/vue--cli-3.10.0-brightgreen?logo=vue-cli&style=flat-square">
-    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen?logo=vue&style=flat-square">
+    <a href="https://www.python.org/" target="_blank">
+        <img src="https://img.shields.io/badge/Python-3.7.4-blue?logo=python&style=flat-square" alt="">
+    </a>
+    <a href="https://palletsprojects.com/p/flask/" target="_blank">
+        <img src="https://img.shields.io/badge/Flask-1.1.1-blue?logo=flask&style=flat-square" alt="">
+    </a>
+    <a href="https://www.sqlite.org/index.html" target="_blank">
+        <img src="https://img.shields.io/badge/sqlite3-3.24.0-green?logo=sqlite&style=flat-square" alt="">
+    </a>
+    <a href="https://cli.vuejs.org/" target="_blank">
+        <img src="https://img.shields.io/badge/vue--cli-3.10.0-brightgreen?logo=vue-cli&style=flat-square" alt="">
+    </a>
+    <a href="https://vuejs.org/" target="_blank">
+        <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen?logo=vue&style=flat-square" alt="">
+    </a>
 </p>
 
 ## Instruction
