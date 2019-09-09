@@ -18,10 +18,13 @@ DD监视器，你要来当监视房里的老大爷吗？这个工具可以让你
 
 ## Environment
 
-- Python 3.7.4
-- Flask 1.1.1
-- sqlite3
-- Vue 3
+<p>
+    <img src="https://img.shields.io/badge/Python-3.7.4-blue?logo=python&style=flat-square">
+    <img src="https://img.shields.io/badge/Flask-1.1.1-blue?logo=flask&style=flat-square">
+    <img src="https://img.shields.io/badge/sqlite3-3.24.0-green?logo=sqlite&style=flat-square">
+    <img src="https://img.shields.io/badge/vue--cli-3.10.0-brightgreen?logo=vue-cli&style=flat-square">
+    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen?logo=vue&style=flat-square">
+</p>
 
 ## Instruction
 
