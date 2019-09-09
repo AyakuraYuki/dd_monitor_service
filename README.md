@@ -18,16 +18,19 @@ DD监视器，你要来当监视房里的老大爷吗？这个工具可以让你
 
 ## Environment
 
-- Python 3.7.4
-- Flask 1.1.1
-- sqlite3
-- Vue 3
+<p>
+    <img src="https://img.shields.io/badge/Python-3.7.4-blue?logo=python&style=flat-square">
+    <img src="https://img.shields.io/badge/Flask-1.1.1-blue?logo=flask&style=flat-square">
+    <img src="https://img.shields.io/badge/sqlite3-3.24.0-green?logo=sqlite&style=flat-square">
+    <img src="https://img.shields.io/badge/vue--cli-3.10.0-brightgreen?logo=vue-cli&style=flat-square">
+    <img src="https://img.shields.io/badge/vue-2.6.10-brightgreen?logo=vue&style=flat-square">
+</p>
 
 ## Instruction
 
 ### Get source codes
 
-```bash
+```shell script
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
@@ -52,7 +55,7 @@ cd dd_monitor
 >
 > To continue, make sure you have `Python 3.7.x`.
 
-```bash
+```shell script
 pip install virtualenv
 ```
 
@@ -64,7 +67,7 @@ If you use virtualenv, run the following script before build the environment.
 
 * Linux/macOS
 
-```bash
+```shell script
 virtualenv venv
 source venv/bin/activate
 ```
@@ -80,7 +83,7 @@ After prepared Python or virtualenv, and Node, use the following scripts to buil
 
 > Here I presented a script called `build.sh` for Linux/macOS, soon I'll make a `build.bat` for Windows users.
 
-```bash
+```shell script
 pip install -r requirements.txt
 chmod +x build.sh
 ./build.sh
@@ -90,7 +93,7 @@ chmod +x build.sh
 
 You need to create a sqlite database file, use this script to continue.
 
-```bash
+```shell script
 flask init-schemas
 ```
 
@@ -98,7 +101,7 @@ flask init-schemas
 
 I didn't package this program, I'll do this stuff if I have time to.
 
-```bash
+```shell script
 flask run
 ```
 
@@ -108,7 +111,7 @@ And now, visit http://127.0.0.1:5140
 
 ### 获取源代码
 
-```bash
+```shell script
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
@@ -133,7 +136,7 @@ cd dd_monitor
 >
 > 在继续之前，确保你安装的Python大于3.7.x版本
 
-```bash
+```shell script
 pip install virtualenv
 ```
 
@@ -145,7 +148,7 @@ pip install virtualenv
 
 * Linux/macOS
 
-```bash
+```shell script
 virtualenv venv
 source venv/bin/activate
 ```
@@ -161,7 +164,7 @@ venv/Scripts/activate
 
 > 这里我为Linux/macOS用户准备了`build.sh`构建运行环境，之后我会很快为Windows用户准备`build.bat`
 
-```bash
+```shell script
 pip install -r requirements.txt
 chmod +x build.sh
 ./build.sh
@@ -171,7 +174,7 @@ chmod +x build.sh
 
 运行之前你需要用下面的命令创建sqlite存储库
 
-```bash
+```shell script
 flask init-schemas
 ```
 
@@ -179,7 +182,7 @@ flask init-schemas
 
 我还没有打包这个工具，如果我有时间我会去做的，现在暂时用flask直接运行
 
-```bash
+```shell script
 flask run
 ```
 
