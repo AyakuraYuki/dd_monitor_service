@@ -5,6 +5,9 @@ from setuptools import setup, find_packages
 with open('README.md', mode='r', encoding='utf-8') as readme:
     description = readme.read()
 
+with open('LICENSE', mode='r', encoding='utf-8') as lic:
+    app_license = lic.read()
+
 setup(
     name='dd-monitor',
     version='0.1.0',
@@ -15,6 +18,7 @@ setup(
     long_description=description,
     long_description_content_type='text/markdown',
     url='https://github.com/AyakuraYuki/dd_monitor',
+    license=app_license,
     include_package_data=True,
     zip_safe=False,
     classifiers=[
