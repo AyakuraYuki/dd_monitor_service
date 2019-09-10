@@ -1,25 +1,25 @@
 # -*- coding: utf-8 -*-
 
-import setuptools
+from setuptools import setup, find_packages
 
 with open('README.md', mode='r', encoding='utf-8') as readme:
     description = readme.read()
 
-setuptools.setup(
+setup(
     name='dd-monitor',
     version='0.1.0',
+    packages=find_packages(),
     author='AyakuraYuki',
     author_email='AyakuraYuki@users.noreply.github.com',
     description='DD streams monitor, DD means 誰でも大好き',
     long_description=description,
     long_description_content_type='text/markdown',
     url='https://github.com/AyakuraYuki/dd_monitor',
-    packages=setuptools.find_packages(),
     include_package_data=True,
     zip_safe=False,
     classifiers=[
         "Programming Language :: Python :: 3",
-        "License :: OSI Approved :: MIT License",
+        "License :: OSI Approved :: GNU General Public License v3 (GPLv3)",
         "Operating System :: OS Independent",
     ],
     install_requires=[
