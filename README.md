@@ -71,7 +71,7 @@ pip install virtualenv
 
 ### Build environment
 
-If you use virtualenv, run the following script before build the environment.
+#### If you use virtualenv, run the following script before build the environment.
 
 > `venv` is the folder name of the virtual environment, you can replace with whatever you want. For the example, I will use `venv`.
 
@@ -89,7 +89,7 @@ virtualenv venv
 venv/Scripts/activate
 ```
 
-After prepared Python or virtualenv, and Node, use the following scripts to build the environment.
+#### After prepared Python or virtualenv, and Node.js, use the following scripts to setup environment.
 
 > Here I presented a script called `build.sh` for Linux/macOS, soon I'll make a `build.bat` for Windows users.
 
