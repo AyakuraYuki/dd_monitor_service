@@ -2,20 +2,20 @@
 
 from setuptools import setup, find_packages
 
-with open('README.md', mode='r', encoding='utf-8') as readme:
-    description = readme.read()
+with open('README.md', mode='r', encoding='utf-8') as _readme:
+    readme = _readme.read()
 
-with open('LICENSE', mode='r', encoding='utf-8') as lic:
-    app_license = lic.read()
+with open('LICENSE', mode='r', encoding='utf-8') as _license:
+    app_license = _license.read()
 
 setup(
     name='dd-monitor',
     version='0.1.0',
     packages=find_packages(),
-    author='AyakuraYuki',
+    author='Ayakura Yuki',
     author_email='AyakuraYuki@users.noreply.github.com',
     description='DD streams monitor, DD means 誰でも大好き',
-    long_description=description,
+    long_description=readme,
     long_description_content_type='text/markdown',
     url='https://github.com/AyakuraYuki/dd_monitor',
     license=app_license,
