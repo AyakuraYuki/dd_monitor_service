@@ -1,0 +1,25 @@
+{
+  "name": "dd_monitor",
+  "version": "0.1.0",
+  "description": "DD streams monitor, DD means 誰でも大好き",
+  "main": "index.js",
+  "scripts": {
+    "setup": "flask init-schemas",
+    "start": "electron ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/AyakuraYuki/dd_monitor.git"
+  },
+  "author": "Ayakura Yuki",
+  "license": "SEE LICENSE IN LICENSE",
+  "bugs": {
+    "url": "https://github.com/AyakuraYuki/dd_monitor/issues"
+  },
+  "homepage": "https://github.com/AyakuraYuki/dd_monitor#readme",
+  "dependencies": {
+    "asar": "^2.0.1",
+    "electron": "^6.0.8",
+    "electron-packager": "^14.0.6"
+  }
+}
