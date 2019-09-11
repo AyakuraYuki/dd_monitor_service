@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "setup": "flask init-schemas",
-    "start": "electron ."
+    "start": "electron .",
+    "package": "electron-packager . 'DD Monitor' --all --app-copyright ./LICENSE --app-version 0.1.0 --out ./package/ --overwrite --icon ./icon.ico"
   },
   "repository": {
     "type": "git",
