@@ -12,6 +12,7 @@ htmlcov/
 
 dist/
 build/
+package/
 *.egg-info/
 .idea/
 

@@ -48,6 +48,8 @@ cd dd_monitor
 ### Get Python and Node.js
 
 > If you already installed both two, you can skip this step.
+>
+> Make sure you have (or download and install) `Python 3.7.x`.
 
 * Python
 
@@ -59,11 +61,11 @@ cd dd_monitor
 
 ### Get virtualenv
 
-> If you already installed virtualenv, you can skip this step. For more information of virtualenv, please visit [virtualenv in pypi](https://pypi.org/project/virtualenv/)
+> Python virtual environments are used to isolate package installation from the system. For more information of virtualenv, please visit [virtualenv in pypi](https://pypi.org/project/virtualenv/)
 >
-> Python virtual environments are used to isolate package installation from the system. I highly recommend you to use virtualenv, but if you want to use installed python and pip, I won't stop you.
+> If you already installed virtualenv, you can skip this step.
 >
-> To continue, make sure you have `Python 3.7.x`.
+> I highly recommend you to use virtualenv, but if you want to use installed python and pip, I won't stop you.
 
 ```shell script
 pip install virtualenv
@@ -95,8 +97,8 @@ venv/Scripts/activate
 
 ```shell script
 pip install -r requirements.txt
-chmod +x build.sh
-./build.sh
+chmod +x build-templates.sh
+build-templates.sh
 ```
 
 ### Before running
@@ -129,6 +131,8 @@ cd dd_monitor
 ### 获取Python和Node.js
 
 > 如果你已经安装了，你可以跳过这一步
+>
+> 在继续之前，确保你安装的Python大于3.7.x版本
 
 * Python
 
@@ -140,11 +144,11 @@ cd dd_monitor
 
 ### 获取virtualenv
 
-> 如果你已经安装了virtualenv， 你可以跳过这一步。想知道更多关于virtualenv的信息，可以访问[virtualenv in pypi](https://pypi.org/project/virtualenv/)。
+> Python虚拟环境被用来将安装的依赖包从系统中隔离出来。想知道更多关于virtualenv的信息，可以访问[virtualenv in pypi](https://pypi.org/project/virtualenv/)。
 >
-> Python虚拟环境被用来将安装的依赖包从系统中隔离出来，我强烈建议你使用virtualenv，但是如果你一定要用本地的Python和pip，我不会阻止你的。
+> 如果你已经安装了virtualenv，你可以跳过这一步。
 >
-> 在继续之前，确保你安装的Python大于3.7.x版本
+> 我强烈建议你使用virtualenv，但是如果你一定要用本地的Python和pip，我不会阻止你的。
 
 ```shell script
 pip install virtualenv
@@ -176,8 +180,8 @@ venv/Scripts/activate
 
 ```shell script
 pip install -r requirements.txt
-chmod +x build.sh
-./build.sh
+chmod +x build-templates.sh
+./build-templates.sh
 ```
 
 ### 运行之前
