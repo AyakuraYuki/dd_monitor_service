@@ -41,8 +41,8 @@ class LinksApi(Resource):
         data = request.json
         title = data.get('title')
         url = data.get('link')
-        link = Link(_id=0, title=title, link=url, sort=link_bridge.latest_sort())
-        link_bridge.insert(link)
+        link = Link(title=title, link=url, sort=link_bridge.latest_sort())
+        link_bridge.save(link)
         return jsonify({
             'link': to_json(link)
         })
@@ -97,10 +97,10 @@ class LinkApi(Resource):
         title = data.get('title')
         url = data.get('link')
         sort = int(data.get('sort'))
-        link = Link(_id=link_id, title=title, link=url, sort=sort)
+        link = Link(lid=link_id, title=title, link=url, sort=sort)
         link_bridge.update(link)
         return jsonify({
-            'link': to_json(link)
+            'link': to_json(link_bridge.get_link(link_id))
         })
 
     @staticmethod
@@ -153,8 +153,8 @@ def save_by_channel():
     channel_id = data.get('channel')
     channel_id = str(channel_id).replace('https://www.youtube.com/channel/', '')
     url = f"https://www.youtube.com/embed/live_stream?channel={channel_id}"
-    link = Link(_id=0, title=title, link=url, sort=link_bridge.latest_sort())
-    link_bridge.insert(link)
+    link = Link(title=title, link=url, sort=link_bridge.latest_sort())
+    link_bridge.save(link)
     return jsonify({
         'link': to_json(link)
     })

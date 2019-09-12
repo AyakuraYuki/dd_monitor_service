@@ -41,9 +41,9 @@ class ChannelsApi(Resource):
         data = request.json
         name = data.get('name')
         channel_id = data.get('channelId')
-        channel = Channel(_id=0, name=name, channel=channel_id)
+        channel = Channel(name=name, channel=channel_id)
         try:
-            channel_bridge.insert(channel)
+            channel_bridge.save(channel)
         except IntegrityError:
             return jsonify({
                 'status': -1,
@@ -100,10 +100,10 @@ class ChannelApi(Resource):
         data = request.json
         name = data.get('name')
         channel_id = data.get('channelId')
-        channel = Channel(_id=cid, name=name, channel=channel_id)
-        channel_bridge.update(channel)
+        channel = Channel(cid=cid, name=name, channel=channel_id)
+        channel_bridge.save(channel)
         return jsonify({
-            'channel': to_json(channel)
+            'channel': to_json(channel_bridge.get_channel(cid))
         })
 
     @staticmethod

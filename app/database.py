@@ -1,54 +1,24 @@
 # -*- coding: utf-8 -*-
 
-import sqlite3
+from sqlalchemy import create_engine
+from sqlalchemy.ext.declarative import declarative_base
+from sqlalchemy.orm import scoped_session, sessionmaker
 
-import click
-from flask import current_app
-from flask import g
-from flask.cli import with_appcontext
-
-
-def get_database():
-    if 'application_database' not in g:
-        g.application_database = sqlite3.connect(
-            current_app.config['DATABASE'],
-            detect_types=sqlite3.PARSE_DECLTYPES,
-        )
-        g.application_database.row_factory = sqlite3.Row
-    return g.application_database
+engine = create_engine('sqlite:///instance/dd_monitor.db', convert_unicode=True)
+session = scoped_session(sessionmaker(bind=engine))
+Base = declarative_base()
 
 
-def execute_update(sql='', parameters=None):
-    if sql == '' or ('?' in sql and parameters is None):
-        return 0
-    with get_database() as db:
-        cursor = db.cursor().execute(sql, parameters)
-        row_count = cursor.rowcount
-        db.commit()
-    return row_count
+def init_db():
+    from . import model
+    Base.metadata.create_all(bind=engine)
+    model.when_import()
 
 
-def close_database(exception=None):
-    database = g.pop('application_database', None)
-    if database is not None:
-        database.close()
-
-
-def __init_schemas():
-    database = get_database()
-    with current_app.open_resource('schema.sql') as script:
-        database.executescript(script.read().decode('utf8'))
-    database.commit()
-    database.close()
-
-
-@click.command('init-schemas')
-@with_appcontext
-def init_schemas_command():
-    __init_schemas()
-    click.echo('Initialized database schemas.')
+def shutdown(exception=None):
+    session.remove()
 
 
 def init_app(app):
-    app.teardown_appcontext(close_database)
-    app.cli.add_command(init_schemas_command)
+    init_db()
+    app.teardown_appcontext(shutdown)

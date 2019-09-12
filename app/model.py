@@ -1,5 +1,9 @@
 # -*- coding: utf-8 -*-
 
+from sqlalchemy import Column, String, Integer
+
+from .database import Base, session
+
 
 def to_json(obj):
     """
@@ -20,65 +24,43 @@ def to_json(obj):
     return obj.json()
 
 
-class Link:
-    def __init__(self, _id=0, title='', link='', sort=0):
-        self._id = _id
-        self.title = title
-        self.link = link
-        self.sort = sort
+def when_import():
+    pass
 
-    def id(self):
-        return self._id
 
-    def __repr__(self):
-        return f'Link [_id: {self._id}, title: "{self.title}", link: "{self.link}", sort: {self.sort}]'
+class Link(Base):
+    __tablename__ = 'table_link'
+    query = session.query_property()
+    lid = Column(Integer, primary_key=True, autoincrement=True)
+    title = Column(String)
+    link = Column(String)
+    sort = Column(Integer)
 
     def json(self):
         return {
-            '_id': self._id,
+            '_id': self.lid,
             'title': self.title,
             'link': self.link,
             'sort': self.sort
         }
 
-    @staticmethod
-    def dump(d):
-        if d:
-            return Link(_id=d['_id'], title=d['title'], link=d['link'], sort=d['sort'])
-        else:
-            return None
-
-    @staticmethod
-    def orm(cursor_row):
-        return Link(_id=cursor_row['id'], title=cursor_row['title'], link=cursor_row['link'], sort=cursor_row['sort'])
+    def __repr__(self):
+        return self.json()
 
 
 class Channel:
-    def __init__(self, _id=0, name='', channel=''):
-        self._id = _id
-        self.name = name
-        self.channel = channel
-
-    def id(self):
-        return self._id
-
-    def __repr__(self):
-        return f'Channel [_id: {self._id}, name: {self.name}, channel: {self.channel}]'
+    __tablename__ = 'table_channel'
+    query = session.query_property()
+    cid = Column(Integer, primary_key=True, autoincrement=True)
+    name = Column(String)
+    channel = Column(String)
 
     def json(self):
         return {
-            '_id': self._id,
+            '_id': self.cid,
             'name': self.name,
             'channel': self.channel
         }
 
-    @staticmethod
-    def dump(d):
-        if d:
-            return Channel(_id=d['_id'], name=d['name'], channel=d['channel'])
-        else:
-            return None
-
-    @staticmethod
-    def orm(cursor_row):
-        return Channel(_id=cursor_row['id'], name=cursor_row['name'], channel=cursor_row['channel'])
+    def __repr__(self):
+        return self.json()
