@@ -3,8 +3,8 @@
 from flask import Blueprint, request, jsonify
 from flask_restful import Resource
 
-from app.bridge import link_bridge
-from app.model import Link, to_json
+from ..bridge import link_bridge
+from ..model import Link, to_json
 
 bp = Blueprint('api.link', __name__, url_prefix='/_/link')
 

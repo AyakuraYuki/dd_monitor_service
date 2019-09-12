@@ -2,7 +2,7 @@
 
 from flask import Blueprint, jsonify
 
-from app.bridge import link_bridge
+from ..bridge import link_bridge
 
 bp = Blueprint('api.player', __name__, url_prefix='/player')
 

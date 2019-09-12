@@ -105,18 +105,9 @@ build-templates.sh
 
 Sorry guys, I didn't make the release version. I'll do this stuff if I have time to.
 
-* Production environment
-
 ```bash
-chmod +x run-prod.sh
-./run-prod.sh
-```
-
-* Development environment
-
-```bash
-chmod +x run-dev.sh
-./run-dev.sh
+chmod +x run.sh
+./run.sh
 ```
 
 And now, visit http://127.0.0.1:5140
@@ -190,18 +181,9 @@ chmod +x build-templates.sh
 
 我还没有打包发布版本，如果我有时间我会去做的。
 
-* 生产环境
-
 ```bash
-chmod +x run-prod.sh
-./run-prod.sh
-```
-
-* 开发环境
-
-```bash
-chmod +x run-dev.sh
-./run-dev.sh
+chmod +x run.sh
+./run.sh
 ```
 
 然后访问 http://127.0.0.1:5140 即可

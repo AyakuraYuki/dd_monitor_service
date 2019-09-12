@@ -31,6 +31,6 @@ setup(
         'flask',
         'flask_cors',
         'flask_restful',
-        'DBUtils',
+        'sqlalchemy',
     ],
 )

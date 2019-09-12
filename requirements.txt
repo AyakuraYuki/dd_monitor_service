@@ -2,5 +2,4 @@ click
 flask
 flask_cors
 flask_restful
-DBUtils
-pyinstaller
+sqlalchemy

@@ -1,11 +1,12 @@
 # -*- coding: utf-8 -*-
+
 from sqlite3 import IntegrityError
 
 from flask import request, jsonify
 from flask_restful import Resource
 
-from app.bridge import channel_bridge
-from app.model import Channel, to_json
+from ..bridge import channel_bridge
+from ..model import Channel, to_json
 
 
 class ChannelsApi(Resource):

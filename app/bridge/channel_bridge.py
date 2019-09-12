@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from app.database import get_database, execute_update
-from app.model import Channel
+from ..database import get_database, execute_update
+from ..model import Channel
 
 
 def channels(query=''):

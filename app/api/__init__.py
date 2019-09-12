@@ -2,8 +2,8 @@
 from flask import Blueprint
 from flask_restful import Api
 
-from app.api.channel_api import ChannelsApi, ChannelApi
-from app.api.link_api import LinksApi, LinkApi
+from .channel_api import ChannelsApi, ChannelApi
+from .link_api import LinksApi, LinkApi
 
 rest = Blueprint('rest', __name__)
 
