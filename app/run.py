@@ -17,6 +17,19 @@ def create_app(test_config=None):
     prepare_app = Flask(__name__, instance_relative_config=True)
     CORS(prepare_app)
 
+    # ensure the instance folder exists
+    try:
+        os.makedirs(prepare_app.instance_path)
+    except OSError:
+        pass
+
+    # load the instance config if it is exists, when not testing
+    if test_config:
+        print(' * Test config detected')
+        prepare_app.config.from_mapping(test_config)
+    else:
+        prepare_app.config.from_pyfile('config.py', silent=True)
+
     prepare_app.config.from_mapping(
         DATABASE=os.path.join(prepare_app.instance_path, 'dd_monitor.db'),
         SECRET_KEY='dev' if prepare_app.debug else '8428bc0d90194a9787e838c96596a6bb',
@@ -27,19 +40,6 @@ def create_app(test_config=None):
             database=os.path.join(prepare_app.instance_path, 'dd_monitor.db'),
         ),
     )
-
-    # load the instance config if it is exists, when not testing
-    if test_config:
-        print(' * Test config detected')
-        prepare_app.config.from_mapping(test_config)
-    else:
-        prepare_app.config.from_pyfile('config.py', silent=True)
-
-    # ensure the instance folder exists
-    try:
-        os.makedirs(prepare_app.instance_path)
-    except OSError:
-        pass
 
     # database
     from . import database
