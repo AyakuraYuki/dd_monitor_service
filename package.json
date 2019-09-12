@@ -7,7 +7,7 @@
     "setup": "flask init-schemas",
     "start": "electron .",
     "packager": "electron-packager ./ 'DD Monitor' --platform=all --arch=x64 --app-copyright=./LICENSE --app-version=0.1.0 --out=./package/ --overwrite --icon=./icon.ico --ignore=./ui --ignore=./node_modules/.bin --ignore=./.git --ignore=./.idea --ignore=./package",
-    "builder": "rm -rf ./package; electron-builder -mwl --x64"
+    "builder": "rm -rf ./package; electron-builder --x64"
   },
   "repository": {
     "type": "git",
@@ -28,13 +28,43 @@
   "build": {
     "productName": "DD Monitor",
     "appId": "cc.ayakurayuki.ddmonitor",
+    "copyright": "Copyright © 2019 Ayakura Yuki",
     "icon": "./icon.icns",
     "directories": {
+      "buildResources": "build",
       "output": "package"
     },
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "./package/.icon-ico/icon.ico",
+      "uninstallerIcon": "./package/.icon-ico/icon.ico",
+      "installerHeaderIcon": "./package/.icon-ico/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "DD Monitor"
+    },
+    "dmg": {
+      "contents": [
+        {
+          "x": 410,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        },
+        {
+          "x": 130,
+          "y": 150,
+          "type": "file"
+        }
+      ]
+    },
     "mac": {
+      "icon": "./icon.icns",
       "target": [
-        "zip"
+        "zip",
+        "dmg"
       ]
     }
   }

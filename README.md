@@ -201,3 +201,7 @@ flask run
 ```
 
 然后访问 http://127.0.0.1:5140 即可
+
+## TODO
+
+* Pack python virtualenv into release packages.
