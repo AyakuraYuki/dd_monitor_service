@@ -40,7 +40,7 @@ DD监视器，你要来当监视房里的老大爷吗？这个工具可以让你
 
 ### Get source codes
 
-```shell script
+```bash
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
@@ -67,7 +67,7 @@ cd dd_monitor
 >
 > I highly recommend you to use virtualenv, but if you want to use installed python and pip, I won't stop you.
 
-```shell script
+```bash
 pip install virtualenv
 ```
 
@@ -79,7 +79,7 @@ pip install virtualenv
 
 * Linux/macOS
 
-```shell script
+```bash
 virtualenv venv
 source venv/bin/activate
 ```
@@ -95,26 +95,28 @@ venv/Scripts/activate
 
 > Here I presented a script called `build.sh` for Linux/macOS, soon I'll make a `build.bat` for Windows users.
 
-```shell script
+```bash
 pip install -r requirements.txt
 chmod +x build-templates.sh
 build-templates.sh
 ```
 
-### Before running
-
-You need to create a sqlite database file, use this script to continue.
-
-```shell script
-flask init-schemas
-```
-
 ### Run
 
-I didn't package this program, I'll do this stuff if I have time to.
+Sorry guys, I didn't make the release version. I'll do this stuff if I have time to.
 
-```shell script
-flask run
+* Production environment
+
+```bash
+chmod +x run-prod.sh
+./run-prod.sh
+```
+
+* Development environment
+
+```bash
+chmod +x run-dev.sh
+./run-dev.sh
 ```
 
 And now, visit http://127.0.0.1:5140
@@ -123,7 +125,7 @@ And now, visit http://127.0.0.1:5140
 
 ### 获取源代码
 
-```shell script
+```bash
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
@@ -150,7 +152,7 @@ cd dd_monitor
 >
 > 我强烈建议你使用virtualenv，但是如果你一定要用本地的Python和pip，我不会阻止你的。
 
-```shell script
+```bash
 pip install virtualenv
 ```
 
@@ -162,7 +164,7 @@ pip install virtualenv
 
 * Linux/macOS
 
-```shell script
+```bash
 virtualenv venv
 source venv/bin/activate
 ```
@@ -178,26 +180,28 @@ venv/Scripts/activate
 
 > 这里我为Linux/macOS用户准备了`build.sh`构建运行环境，之后我会很快为Windows用户准备`build.bat`
 
-```shell script
+```bash
 pip install -r requirements.txt
 chmod +x build-templates.sh
 ./build-templates.sh
 ```
 
-### 运行之前
-
-运行之前你需要用下面的命令创建sqlite存储库
-
-```shell script
-flask init-schemas
-```
-
 ### 运行
 
-我还没有打包这个工具，如果我有时间我会去做的，现在暂时用flask直接运行
+我还没有打包发布版本，如果我有时间我会去做的。
 
-```shell script
-flask run
+* 生产环境
+
+```bash
+chmod +x run-prod.sh
+./run-prod.sh
+```
+
+* 开发环境
+
+```bash
+chmod +x run-dev.sh
+./run-dev.sh
 ```
 
 然后访问 http://127.0.0.1:5140 即可
