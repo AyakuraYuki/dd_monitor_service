@@ -1,9 +1,8 @@
 const {app, BrowserWindow} = require("electron")
 const spawn = require("child_process").spawn
 const exec = require("child_process").exec
-const fs = require("fs")
 
-flask = spawn('flask', ['run'])
+flask = spawn('python', ['run-dd-monitor.py'])
 
 flask.stdout.on('data', (data) => {
     console.log(data.toString())
@@ -14,7 +13,6 @@ flask.stderr.on('data', (data) => {
 })
 
 flask.on('exit', (code) => {
-    exec("ps -ef | grep flask | grep -v grep | awk '{print $2}' | xargs kill")
     console.log(`exit ${code}`)
 })
 
@@ -25,11 +23,6 @@ function sleep(delay) {
 }
 
 function createWindow() {
-    if (!fs.existsSync("./instance/dd_monitor.db")) {
-        exec("flask init-schemas")
-        sleep(500)
-    }
-
     let win = new BrowserWindow({
         width: 1600,
         height: 1080
@@ -40,4 +33,6 @@ function createWindow() {
 }
 
 app.on("ready", createWindow)
-app.on("quit", () => exec("ps -ef | grep flask | grep -v grep | awk '{print $2}' | xargs kill"))
+app.on("quit", () =>
+    exec("ps -ef | grep 'python run-dd-monitor.py' | grep -v grep | awk '{print $2}' | xargs kill")
+)

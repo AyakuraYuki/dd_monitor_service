@@ -1,4 +1,4 @@
 #!/usr/bin/env bash
-export FLASK_APP=run.py
+export FLASK_APP=run-dd-monitor.py
 flask init-schemas
-python run.py
+python run-dd-monitor.py
