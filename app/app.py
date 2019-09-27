@@ -2,7 +2,7 @@
 
 import os
 
-from flask import Flask, render_template
+from flask import Flask
 from flask_cors import CORS
 
 
@@ -45,11 +45,6 @@ def create_app(test_config=None):
     prepare_app.register_blueprint(link_api.bp)
     prepare_app.register_blueprint(player_api.bp)
     prepare_app.register_blueprint(vue_api.bp)
-
-    # web entry
-    @prepare_app.route('/')
-    def index():
-        return render_template('index.html')
 
     return prepare_app
 
