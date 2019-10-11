@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ..database import session
+from ..database import session as db_session
 from ..model import Channel
 
 
@@ -13,10 +13,10 @@ def get_channel(cid=0):
 
 
 def save(channel: Channel = None):
-    session.add(channel)
-    session.commit()
+    db_session.add(channel)
+    db_session.commit()
 
 
 def delete(cid=0):
-    session.delete(get_channel(cid))
-    session.commit()
+    db_session.delete(get_channel(cid))
+    db_session.commit()

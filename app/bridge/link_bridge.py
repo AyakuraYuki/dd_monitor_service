@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from ..database import session
+from ..database import session as db_session
 from ..model import Link
 
 
@@ -14,22 +14,22 @@ def get_link(lid=0):
 
 def save(link: Link = None):
     if link:
-        session.add(link)
-        session.commit()
+        db_session.add(link)
+        db_session.commit()
 
 
 def update(link: Link = None):
     if link:
-        modify = session.query(Link).filter(Link.lid == link.lid).scalar()
+        modify = db_session.query(Link).filter(Link.lid == link.lid).scalar()
         modify.title = link.title
         modify.link = link.link
         modify.sort = link.sort
-        session.commit()
+        db_session.commit()
 
 
 def delete(lid=0):
-    session.delete(get_link(lid))
-    session.commit()
+    db_session.delete(get_link(lid))
+    db_session.commit()
 
 
 def latest_sort():
