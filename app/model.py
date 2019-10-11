@@ -48,7 +48,7 @@ class Link(Base):
         return self.json()
 
 
-class Channel:
+class Channel(Base):
     __tablename__ = 'table_channel'
     query = session.query_property()
     cid = Column(Integer, primary_key=True, autoincrement=True)
