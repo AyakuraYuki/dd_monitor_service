@@ -43,6 +43,12 @@ git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
 ```
 
+If you are in `master` branch, continue to run the following script:
+
+```bash
+git checkout backend
+```
+
 ### Get Python
 
 > If you already installed python, you can skip this step.
@@ -109,6 +115,12 @@ And now, try `curl "http://localhost:5140/player/list"`. Port `5140` is the defa
 ```bash
 git clone https://github.com/AyakuraYuki/dd_monitor.git
 cd dd_monitor
+```
+
+如果你正处于`master`分支下，请继续执行下面的命令，切换到后端分支：
+
+```bash
+git checkout backend
 ```
 
 ### 获取Python
