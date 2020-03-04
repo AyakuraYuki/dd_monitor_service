@@ -1,6 +1,6 @@
 # dd_monitor
 
-> As a reminder, you are looking at the backend branch, I split the master branch to the frontend and the backend, make it easy for me to maintain.
+> As a reminder, you are looking at the `backend` branch, I split the master branch to the frontend and the backend, make it easy for me to maintain.
 > 
 > 在这里提醒一下，你现在查看的是后端的部分，我将master分支拆分成前端部分和后端部分，让我维护起来更轻松。
 
