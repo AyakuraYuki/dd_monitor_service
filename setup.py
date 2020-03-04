@@ -27,10 +27,10 @@ setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
-        'click',
         'flask',
         'flask_cors',
         'flask_restful',
         'sqlalchemy',
+        'fire',
     ],
 )
