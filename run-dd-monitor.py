@@ -1,8 +1,15 @@
 # -*- coding: utf-8 -*-
 
+import fire
+
 from app.app import app
 
-if __name__ == '__main__':
+
+def run(port: int = 5140):
     app.run(
-        port=5140
+        port=port
     )
+
+
+if __name__ == '__main__':
+    fire.Fire(run)

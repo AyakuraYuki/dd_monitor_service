@@ -2,4 +2,4 @@
 
 DEBUG = False
 TESTING = False
-SECRET_KEY = '<you should replace this whole string>'
+SECRET_KEY = 'you should replace this whole string'
