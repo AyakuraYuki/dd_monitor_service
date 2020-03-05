@@ -1,22 +1,48 @@
-const {app, BrowserWindow} = require("electron")
+const { app, BrowserWindow } = require("electron")
+
+let win
 
 function sleep(delay) {
     const start = (new Date()).getTime();
     while ((new Date()).getTime() - start < delay) {
+        // DO NOTHING
     }
 }
 
 function createWindow() {
-    let win = new BrowserWindow({
+    win = new BrowserWindow({
         width: 1600,
-        height: 1080
+        height: 1080,
     })
-    sleep(2000)
-    win.loadFile("./main.js")
-        .then(() => console.log('win.loaded'))
+
+    sleep(100)
+
+    win.loadFile('index.html')
+        .then(() => {
+        })
+        .catch((e) => {
+            console.log(e)
+        })
+
+    win.on('close', () => {
+        win = null
+    })
 }
 
 app.on("ready", createWindow)
+
+app.on('window-all-closed', () => {
+    if (process.platform !== 'darwin') {
+        app.quit()
+    }
+})
+
+app.on('activate', () => {
+    if (win === null) {
+        createWindow()
+    }
+})
+
 // app.on("quit", () =>
 //     exec("ps -ef | grep 'python run-dd-monitor.py' | grep -v grep | awk '{print $2}' | xargs kill")
 // )

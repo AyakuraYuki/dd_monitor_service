@@ -2,13 +2,14 @@
   "name": "dd_monitor",
   "version": "0.1.0",
   "description": "DD streams monitor, DD means 誰でも大好き",
-  "main": "src/index.js",
+  "main": "dist/index.js",
   "scripts": {
     "serve": "vue-cli-service serve",
-    "build": "vue-cli-service build",
+    "build": "vue-cli-service build; cp src/index.js dist/",
     "lint": "vue-cli-service lint",
-    "start": "electron .",
-    "builder": "rm -rf ./package; electron-builder --x64"
+    "clean": "rm -vrf ./package; rm -vrf ./dist",
+    "start": "npm run build; electron .",
+    "package": "npm run clean; npm run build; electron-builder --x64"
   },
   "repository": {
     "type": "git",
@@ -21,25 +22,25 @@
   },
   "homepage": "https://github.com/AyakuraYuki/dd_monitor#readme",
   "dependencies": {
-    "axios": "^0.19.0",
-    "bootstrap": "^4.3.1",
-    "bootstrap-vue": "^2.0.0-rc.28",
+    "axios": "^0.19.2",
+    "bootstrap": "^4.4.1",
+    "bootstrap-vue": "^2.5.0",
     "register-service-worker": "^1.6.2",
-    "vue": "^2.6.10",
-    "vue-router": "^3.0.3"
+    "vue": "^2.6.11",
+    "vue-router": "^3.1.6"
   },
   "devDependencies": {
-    "@vue/cli-plugin-eslint": "^3.10.0",
-    "@vue/cli-plugin-pwa": "^3.10.0",
-    "@vue/cli-service": "^3.10.0",
-    "babel-eslint": "^10.0.1",
+    "@vue/cli-plugin-eslint": "^3.12.1",
+    "@vue/cli-plugin-pwa": "^3.12.1",
+    "@vue/cli-service": "^3.12.1",
+    "asar": "^2.1.0",
+    "babel-eslint": "^10.1.0",
+    "cross-env": "^5.2.1",
+    "electron": "^6.1.9",
+    "electron-builder": "^21.2.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "vue-template-compiler": "^2.6.10",
-    "asar": "^2.0.1",
-    "cross-env": "^5.2.1",
-    "electron": "^6.0.8",
-    "electron-builder": "^21.2.0"
+    "vue-template-compiler": "^2.6.11"
   },
   "build": {
     "productName": "DD Monitor",
