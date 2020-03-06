@@ -1,4 +1,6 @@
 const { app, BrowserWindow } = require("electron")
+// const appConfigDir = app.getPath('userData')
+// const appCoreDownloadDir = `${appConfigDir}/dd_monitor_core`
 
 let win
 
@@ -17,7 +19,7 @@ function createWindow() {
 
     sleep(100)
 
-    win.loadFile('index.html')
+    win.loadFile('./dist/index.html')
         .then(() => {
         })
         .catch((e) => {

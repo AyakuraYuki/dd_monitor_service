@@ -8,23 +8,24 @@
     "build": "vue-cli-service build; cp src/index.js dist/",
     "lint": "vue-cli-service lint",
     "clean": "rm -vrf ./package; rm -vrf ./dist",
-    "start": "npm run build; electron .",
+    "start": "npm run build; export NODE_ENV=dev; electron .",
     "package": "npm run clean; npm run build; electron-builder --x64"
+  },
+  "author": "Ayakura Yuki",
+  "license": "GNU General Public License v3.0",
+  "homepage": "https://github.com/AyakuraYuki/dd_monitor",
+  "bugs": {
+    "url": "https://github.com/AyakuraYuki/dd_monitor/issues"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/AyakuraYuki/dd_monitor.git"
   },
-  "author": "Ayakura Yuki",
-  "license": "SEE LICENSE IN LICENSE",
-  "bugs": {
-    "url": "https://github.com/AyakuraYuki/dd_monitor/issues"
-  },
-  "homepage": "https://github.com/AyakuraYuki/dd_monitor#readme",
   "dependencies": {
     "axios": "^0.19.2",
     "bootstrap": "^4.4.1",
     "bootstrap-vue": "^2.5.0",
+    "download-git-repo": "^3.0.2",
     "register-service-worker": "^1.6.2",
     "vue": "^2.6.11",
     "vue-router": "^3.1.6"
