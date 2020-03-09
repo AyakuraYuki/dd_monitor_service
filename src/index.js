@@ -1,17 +1,25 @@
 const { app, BrowserWindow } = require("electron")
 const fs = require('fs')
-const exec = require('child_process').exec
 const downloadGitRepo = require('download-git-repo')
 const log = require('electron-log')
+const { exec } = require('child_process')
+
+
+// platform
+const platform = process.platform
+
 
 // constant
-const appPath = app.getPath('userData')
+
+// macOS: "${HOME}/Library/Application Support/dd_monitor"
+// windows & linux: "<exec_dir>"
+const appPath = platform === 'darwin' ? app.getPath('userData') : process.cwd()
 const appCorePath = `${appPath}/core`
-const logFolder = `${appPath}/logs`
+
 
 // logger
-export const logPath = `${logFolder}/dd-monitor.log`
-log.transports.file.file = logPath
+const logPath = `${appPath}/logs`
+log.transports.file.file = `${logPath}/dd-monitor.log`
 log.transports.file.format = '{y}-{m}-{d} {h}:{i}:{s}:{ms} [{level}] {text}'
 log.transports.file.maxSize = 5 * 1024 * 1024
 log.transports.file.level = 'info'
@@ -22,26 +30,63 @@ if (process.env.NODE_ENV === 'dev') {
     log.transports.console.level = 'info'
 }
 
-let win
 
-function initCore() {
-    log['debug'](`appPath: ${appPath}`)
-    log['debug'](`appCorePath: ${appCorePath}`)
+// core
+let cmdStr = `./run.sh`
+let workerProcess
 
+function downloadCore() {
+    return new Promise((resolve, reject) => {
+        downloadGitRepo(`AyakuraYuki/dd_monitor#backend`, appCorePath, {}, err => {
+            log[err ? 'error' : 'info'](`Core download ${err ? 'error' : 'success'}`)
+
+            let pipProcess = exec('pip install -r requirements.txt', { cwd: appCorePath })
+
+            pipProcess.stdout.on("data", (data) => {
+                log['debug'](data)
+            })
+            pipProcess.stderr.on("data", (data) => {
+                log['error'](data)
+                reject()
+            })
+            pipProcess.on("exit", (code, signal) => {
+                log['info'](`Core init complete. exit(${code})[${signal}]`)
+                resolve()
+            })
+        })
+    })
+}
+
+async function runExec() {
+    workerProcess = exec(cmdStr, { cwd: appCorePath })
+
+    workerProcess.stdout.on("data", (data) => {
+        log['debug'](`core info ===== ${data}`)
+    })
+    workerProcess.stderr.on("data", (data) => {
+        log['error'](`core exception ===== ${data}`)
+    })
+    workerProcess.on("close", (code, signal) => {
+        log['info'](`core close ===== [code: ${code}] [signal: ${signal}]`)
+    })
+}
+
+async function initCore() {
     if (fs.existsSync(appCorePath)) {
         let pathStat = fs.statSync(appCorePath)
         if (!(pathStat.isDirectory())) {
             fs.unlinkSync(appCorePath)
-            downloadGitRepo(`AyakuraYuki/dd_monitor#backend`, appCorePath, err => {
-                log[err ? 'error' : 'info'](`Core download ${err ? 'error' : 'success'}`)
-            })
+            await downloadCore()
         }
     } else {
-        downloadGitRepo(`AyakuraYuki/dd_monitor#backend`, appCorePath, err => {
-            log[err ? 'error' : 'info'](`Core download ${err ? 'error' : 'success'}`)
-        })
+        await downloadCore()
     }
+    await runExec()
 }
+
+
+// application and window
+let win
 
 function createWindow() {
     win = new BrowserWindow({
@@ -62,12 +107,12 @@ function createWindow() {
 }
 
 app.on("ready", () => {
-    initCore()
-    createWindow()
+    initCore().then(createWindow)
 })
 
 app.on("before-quit", () => {
-
+    exec("ps -ef | grep 'run-dd-monitor.py' | grep -v 'grep' | awk '{print $2}' | xargs kill")
+    log['info']('bye')
 })
 
 app.on('window-all-closed', () => {
@@ -81,10 +126,6 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-// app.on("quit", () =>
-//     exec("ps -ef | grep 'python run-dd-monitor.py' | grep -v grep | awk '{print $2}' | xargs kill")
-// )
 
 // function sleep(delay) {
 //     const start = (new Date()).getTime();
