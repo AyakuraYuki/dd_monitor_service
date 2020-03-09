@@ -29,14 +29,18 @@
                     </div>
                 </div>
 
-                <b-table striped borderless responsive="sm" :items="linkList" :fields="fields" head-variant="dark">
-                    <template slot="[options]" slot-scope="row">
-                        <b-button v-b-modal.edit-link class="btn-sm bg-info text-light"
-                                  @click="editLink(row.item, 'PUT')">
+                <b-table striped borderless responsive="sm" :items="links" :fields="fields" head-variant="dark">
+                    <template v-slot:cell(options)="link">
+                        <b-button v-b-modal.edit-link
+                                  size="sm"
+                                  class="btn-sm bg-info text-light border-0"
+                                  @click="editLink(link.item, 'PUT')">
                             Edit
                         </b-button>
                         &nbsp;
-                        <b-button class="btn-sm bg-danger text-light" @click="deleteLink(row.item._id)">
+                        <b-button size="sm"
+                                  class="btn-sm bg-danger text-light border-0"
+                                  @click="deleteLink(link.item._id)">
                             Delete
                         </b-button>
                     </template>
@@ -52,7 +56,7 @@
 <script>
     import ModalEditLink from "../components/dashboard/ModalEditLink"
     import ModalSaveLinkByChannel from "../components/dashboard/ModalSaveLinkByChannel"
-    import { linkList, deleteLink } from "../api/dashboard"
+    import { deleteLink, linkList } from "../api/dashboard"
 
     export default {
         name: "Dashboard",
@@ -66,12 +70,13 @@
                     query: ''
                 },
 
-                fields: {
-                    title: { label: 'Description' },
-                    link: { label: 'Link' },
-                    options: { label: 'Options' }
-                },
-                linkList: [],
+                fields: [
+                    { key: 'sort', label: 'No.', sortable: true },
+                    { key: 'title', label: 'Description', sortable: true },
+                    { key: 'link', label: 'Link' },
+                    { key: 'options', label: 'Options' }
+                ],
+                links: [],
 
                 modalEdit: {
                     item: {},
@@ -83,7 +88,7 @@
             fetchLinkList() {
                 linkList({ ...this.form }).then(res => {
                     let data = res.data
-                    this.linkList = data.list
+                    this.links = data.list
                 })
             },
             deleteLink(lid) {
