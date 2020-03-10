@@ -36,18 +36,8 @@ function runCommand(command) {
     return new Promise(resolve => {
         if (command) {
             try {
-                let execInstance = cp.exec(command, () => {
+                cp.exec(command, () => {
                     resolve()
-                })
-                execInstance.stdout.on("data", (data) => {
-                    log['debug'](`cmd: ${data}`)
-                })
-                execInstance.stderr.on("data", (error) => {
-                    log['error'](`cmd err: ${error}`)
-                })
-                execInstance.on("close", (code, signal) => {
-                    log['info'](`cmd close. code: ${code}; signal: ${signal}`)
-                    execInstance = null
                 })
             } catch (error) {
                 log['error'](error)
@@ -74,7 +64,7 @@ function downloadCore() {
 
 async function runPythonCore() {
     try {
-        let command = 'python'
+        let command = 'python3'
         const params = [path.join(appCorePath, 'run-dd-monitor.py')]
         params.push('--port')
         params.push('5140')
@@ -94,11 +84,11 @@ async function runPythonCore() {
             coreInstance = cp.execFile(command, params, { cwd: appCorePath })
         }
 
-        coreInstance.stdout.on("data", data => {
-            log['debug'](data)
+        coreInstance.stdout.on("data", chunk => {
+            log['debug'](chunk)
         })
-        coreInstance.stderr.on("data", error => {
-            log['error'](error)
+        coreInstance.stderr.on("data", chunk => {
+            log['error'](chunk)
         })
         coreInstance.once("exit", code => {
             log['info'](`Core exit with code ${code}`)
@@ -111,17 +101,40 @@ async function runPythonCore() {
     }
 }
 
+async function buildCoreEnv() {
+    const params = ['install', '-r', path.join(appCorePath, 'requirements.txt')]
+    try {
+        cp.execFile('pip', params, { cwd: appCorePath }, err => {
+            log['error'](err)
+        })
+    } catch (error) {
+        log['error']('Core runtime check failed, cause:')
+        log['error'](error)
+        log['info']('pip not found, try to install requirements by using pip3')
+
+        try {
+            cp.execFile('pip3', params, { cwd: appCorePath }, err => {
+                log['error'](err)
+            })
+        } catch (innerError) {
+            log['error']('Core runtime check failed, cause:')
+            log['error'](innerError)
+            app.quit()
+        }
+    }
+}
+
 async function initCore() {
     if (fs.existsSync(appCorePath)) {
         let pathStat = fs.statSync(appCorePath)
         if (!(pathStat.isDirectory())) {
             fs.unlinkSync(appCorePath)
             await downloadCore()
-            await runCommand(`pip install -r "${appCorePath}/requirements.txt"`)
+            await buildCoreEnv()
         }
     } else {
         await downloadCore()
-        await runCommand(`pip install -r "${appCorePath}/requirements.txt"`)
+        await buildCoreEnv()
     }
     await runPythonCore()
 }
