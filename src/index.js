@@ -104,7 +104,7 @@ async function runPythonCore() {
 async function buildCoreEnv() {
     const params = ['install', '-r', path.join(appCorePath, 'requirements.txt')]
     try {
-        cp.execFile('pip', params, { cwd: appCorePath }, err => {
+        cp.execFile('pip3', params, { cwd: appCorePath }, err => {
             log['error'](err)
         })
     } catch (error) {
@@ -113,7 +113,7 @@ async function buildCoreEnv() {
         log['info']('pip not found, try to install requirements by using pip3')
 
         try {
-            cp.execFile('pip3', params, { cwd: appCorePath }, err => {
+            cp.execFile('pip', params, { cwd: appCorePath }, err => {
                 log['error'](err)
             })
         } catch (innerError) {
