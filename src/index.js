@@ -88,7 +88,8 @@ async function runPythonCore() {
             log['debug'](chunk)
         })
         coreInstance.stderr.on("data", chunk => {
-            log['error'](chunk)
+            // some flask logs have been marked as the error level
+            log['debug'](`[core info] ${chunk}`)
         })
         coreInstance.once("exit", code => {
             log['info'](`Core exit with code ${code}`)
