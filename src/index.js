@@ -2,7 +2,8 @@ const { app, BrowserWindow } = require("electron")
 const fs = require('fs')
 const downloadGitRepo = require('download-git-repo')
 const log = require('electron-log')
-const { exec } = require('child_process')
+const cp = require('child_process')
+const path = require('path')
 
 
 // platform
@@ -31,44 +32,83 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 
+function runCommand(command) {
+    return new Promise(resolve => {
+        if (command) {
+            try {
+                let execInstance = cp.exec(command, () => {
+                    resolve()
+                })
+                execInstance.stdout.on("data", (data) => {
+                    log['debug'](`cmd: ${data}`)
+                })
+                execInstance.stderr.on("data", (error) => {
+                    log['error'](`cmd err: ${error}`)
+                })
+                execInstance.on("close", (code, signal) => {
+                    log['info'](`cmd close. code: ${code}; signal: ${signal}`)
+                    execInstance = null
+                })
+            } catch (error) {
+                log['error'](error)
+                resolve()
+            }
+        } else {
+            resolve()
+        }
+    })
+}
+
+
 // core
-let cmdStr = `./run.sh`
-let workerProcess
+let coreInstance
 
 function downloadCore() {
-    return new Promise((resolve, reject) => {
+    return new Promise((resolve) => {
         downloadGitRepo(`AyakuraYuki/dd_monitor#backend`, appCorePath, {}, err => {
             log[err ? 'error' : 'info'](`Core download ${err ? 'error' : 'success'}`)
-
-            let pipProcess = exec('pip install -r requirements.txt', { cwd: appCorePath })
-
-            pipProcess.stdout.on("data", (data) => {
-                log['debug'](data)
-            })
-            pipProcess.stderr.on("data", (data) => {
-                log['error'](data)
-                reject()
-            })
-            pipProcess.on("exit", (code, signal) => {
-                log['info'](`Core init complete. exit(${code})[${signal}]`)
-                resolve()
-            })
+            resolve()
         })
     })
 }
 
-async function runExec() {
-    workerProcess = exec(cmdStr, { cwd: appCorePath })
+async function runPythonCore() {
+    try {
+        let command = 'python'
+        const params = [path.join(appCorePath, 'run-dd-monitor.py')]
+        params.push('--port')
+        params.push('5140')
 
-    workerProcess.stdout.on("data", (data) => {
-        log['debug'](`core info ===== ${data}`)
-    })
-    workerProcess.stderr.on("data", (data) => {
-        log['error'](`core exception ===== ${data}`)
-    })
-    workerProcess.on("close", (code, signal) => {
-        log['info'](`core close ===== [code: ${code}] [signal: ${signal}]`)
-    })
+        const commandStr = `${command} ${params.join(' ')}`
+        log['debug'](`run command: ${commandStr}`)
+
+        if (platform === 'win32') {
+            let _path = process.env.path
+            coreInstance = cp.execFile(command, params, {
+                cwd: appCorePath,
+                env: {
+                    path: _path
+                }
+            })
+        } else {
+            coreInstance = cp.execFile(command, params, { cwd: appCorePath })
+        }
+
+        coreInstance.stdout.on("data", data => {
+            log['debug'](data)
+        })
+        coreInstance.stderr.on("data", error => {
+            log['error'](error)
+        })
+        coreInstance.once("exit", code => {
+            log['info'](`Core exit with code ${code}`)
+            coreInstance = null
+        })
+    } catch (error) {
+        log['error']('Core check failed, cause:')
+        log['error'](error)
+        app.quit()
+    }
 }
 
 async function initCore() {
@@ -77,11 +117,13 @@ async function initCore() {
         if (!(pathStat.isDirectory())) {
             fs.unlinkSync(appCorePath)
             await downloadCore()
+            await runCommand(`pip install -r "${appCorePath}/requirements.txt"`)
         }
     } else {
         await downloadCore()
+        await runCommand(`pip install -r "${appCorePath}/requirements.txt"`)
     }
-    await runExec()
+    await runPythonCore()
 }
 
 
@@ -111,7 +153,10 @@ app.on("ready", () => {
 })
 
 app.on("before-quit", () => {
-    exec("ps -ef | grep 'run-dd-monitor.py' | grep -v 'grep' | awk '{print $2}' | xargs kill")
+    runCommand("ps -ef | grep 'run-dd-monitor.py' | grep -v 'grep' | awk '{print $2}' | xargs kill")
+        .then(() => {
+            log['info']('Core closed')
+        })
     log['info']('bye')
 })
 
@@ -126,10 +171,3 @@ app.on('activate', () => {
         createWindow()
     }
 })
-
-// function sleep(delay) {
-//     const start = (new Date()).getTime();
-//     while ((new Date()).getTime() - start < delay) {
-//         // DO NOTHING
-//     }
-// }
