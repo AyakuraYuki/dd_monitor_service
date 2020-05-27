@@ -32,7 +32,7 @@ if (process.env.NODE_ENV === 'dev') {
 }
 
 
-function runCommand(command) {
+function runCommand (command) {
     return new Promise(resolve => {
         if (command) {
             try {
@@ -53,7 +53,7 @@ function runCommand(command) {
 // core
 let coreInstance
 
-function downloadCore() {
+function downloadCore () {
     return new Promise((resolve) => {
         downloadGitRepo(`AyakuraYuki/dd_monitor#backend`, appCorePath, {}, err => {
             log[err ? 'error' : 'info'](`Core download ${err ? 'error' : 'success'}`)
@@ -62,7 +62,30 @@ function downloadCore() {
     })
 }
 
-async function runPythonCore() {
+async function buildCoreEnv () {
+    const params = ['install', '-r', path.join(appCorePath, 'requirements.txt')]
+    try {
+        cp.execFile('pip3', params, { cwd: appCorePath }, err => {
+            log['error'](err)
+        })
+    } catch (error) {
+        log['error']('Core runtime check failed, cause:')
+        log['error'](error)
+        log['info']('pip not found, try to install requirements by using pip3')
+
+        try {
+            cp.execFile('pip', params, { cwd: appCorePath }, err => {
+                log['error'](err)
+            })
+        } catch (innerError) {
+            log['error']('Core runtime check failed, cause:')
+            log['error'](innerError)
+            app.quit()
+        }
+    }
+}
+
+async function runPythonCore () {
     try {
         let command = 'python3'
         const params = [path.join(appCorePath, 'run-dd-monitor.py')]
@@ -76,9 +99,7 @@ async function runPythonCore() {
             let _path = process.env.path
             coreInstance = cp.execFile(command, params, {
                 cwd: appCorePath,
-                env: {
-                    path: _path
-                }
+                env: { path: _path }
             })
         } else {
             coreInstance = cp.execFile(command, params, { cwd: appCorePath })
@@ -102,30 +123,7 @@ async function runPythonCore() {
     }
 }
 
-async function buildCoreEnv() {
-    const params = ['install', '-r', path.join(appCorePath, 'requirements.txt')]
-    try {
-        cp.execFile('pip3', params, { cwd: appCorePath }, err => {
-            log['error'](err)
-        })
-    } catch (error) {
-        log['error']('Core runtime check failed, cause:')
-        log['error'](error)
-        log['info']('pip not found, try to install requirements by using pip3')
-
-        try {
-            cp.execFile('pip', params, { cwd: appCorePath }, err => {
-                log['error'](err)
-            })
-        } catch (innerError) {
-            log['error']('Core runtime check failed, cause:')
-            log['error'](innerError)
-            app.quit()
-        }
-    }
-}
-
-async function initCore() {
+async function initCore () {
     if (fs.existsSync(appCorePath)) {
         let pathStat = fs.statSync(appCorePath)
         if (!(pathStat.isDirectory())) {
@@ -144,7 +142,7 @@ async function initCore() {
 // application and window
 let win
 
-function createWindow() {
+function createWindow () {
     win = new BrowserWindow({
         width: 1600,
         height: 1080,
