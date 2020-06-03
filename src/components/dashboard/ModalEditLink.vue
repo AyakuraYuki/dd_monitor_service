@@ -24,6 +24,7 @@
 
 <script>
     import { saveLink, updateLink } from "../../api/dashboard"
+    import { REQUEST_POST, REQUEST_PUT } from "../../api/api"
 
     export default {
         name: "ModalEditLink",
@@ -31,18 +32,18 @@
             method: String,
             item: {}
         },
-        data() {
+        data () {
             return {
                 link: {}
             }
         },
         watch: {
-            item(val) {
+            item (val) {
                 this.handleLink(val)
             }
         },
         methods: {
-            handleLink(val) {
+            handleLink (val) {
                 this.link = {
                     _id: val && val._id ? val._id : 0,
                     title: val && val.title ? val.title : '',
@@ -50,13 +51,13 @@
                     sort: val && val.sort ? val.sort : 1
                 }
             },
-            save() {
+            save () {
                 if (this.method) {
-                    if (this.method === 'POST') {
+                    if (this.method === REQUEST_POST) {
                         saveLink(this.link).then(() => {
                             this.$emit('update:linkList')
                         })
-                    } else if (this.method === 'PUT') {
+                    } else if (this.method === REQUEST_PUT) {
                         updateLink(this.link._id, this.link).then(() => {
                             this.$emit('update:linkList')
                         })
@@ -67,7 +68,7 @@
             //     this.method = ''
             //     this.item = undefined
             // },
-            modalTitle() {
+            modalTitle () {
                 if (this.item && this.item._id) {
                     return 'Edit stream'
                 }

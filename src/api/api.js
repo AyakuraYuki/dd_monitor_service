@@ -7,3 +7,8 @@ api.defaults.headers.post['Content-Type'] = 'application/json;charset=UTF-8'
 api.defaults.baseURL = BASE_API
 
 export default api
+
+export const REQUEST_GET = 'GET'
+export const REQUEST_POST = 'POST'
+export const REQUEST_PUT = 'PUT'
+export const REQUEST_DELETE = 'DELETE'

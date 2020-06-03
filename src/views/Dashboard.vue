@@ -34,20 +34,20 @@
                         <b-button v-b-modal.edit-link
                                   size="sm"
                                   class="btn-sm bg-info text-light border-0"
-                                  @click="editLink(link.item, 'PUT')">
-                            Edit
+                                  @click="updateLink(link.item)">Edit
                         </b-button>
                         &nbsp;
                         <b-button size="sm"
                                   class="btn-sm bg-danger text-light border-0"
-                                  @click="deleteLink(link.item._id)">
-                            Delete
+                                  @click="deleteLink(link.item._id)">Delete
                         </b-button>
                     </template>
                 </b-table>
             </main>
 
-            <modal-edit-link @update:linkList="fetchLinkList" :item="modalEdit.item" :method="modalEdit.method"/>
+            <modal-edit-link @update:linkList="fetchLinkList"
+                             :item="modalEdit.item"
+                             :method="modalEdit.method"/>
             <modal-save-link-by-channel @update:linkList="fetchLinkList"/>
         </div>
     </div>
@@ -57,6 +57,8 @@
     import ModalEditLink from "../components/dashboard/ModalEditLink"
     import ModalSaveLinkByChannel from "../components/dashboard/ModalSaveLinkByChannel"
     import { deleteLink, linkList } from "../api/dashboard"
+    import { REQUEST_POST, REQUEST_PUT } from "../api/api"
+    import EditMixin from "../mixin/edit"
 
     export default {
         name: "Dashboard",
@@ -64,7 +66,7 @@
             ModalEditLink,
             ModalSaveLinkByChannel
         },
-        data() {
+        data () {
             return {
                 form: {
                     query: ''
@@ -84,27 +86,33 @@
                 }
             }
         },
+        mixins: [
+            EditMixin
+        ],
         methods: {
-            fetchLinkList() {
+            fetchLinkList () {
                 linkList({ ...this.form }).then(res => {
                     let data = res.data
                     this.links = data.list
                 })
             },
-            deleteLink(lid) {
+            deleteLink (lid) {
                 deleteLink(lid).then(() => {
                     this.fetchLinkList()
                 })
             },
-            editLink(item, method) {
+            editLink (item, method) {
                 this.modalEdit.item = item
                 this.modalEdit.method = method
             },
-            createLink() {
-                this.editLink(undefined, 'POST')
+            createLink () {
+                this.editLink(undefined, REQUEST_POST)
+            },
+            updateLink (item) {
+                this.editLink(item, REQUEST_PUT)
             }
         },
-        mounted() {
+        mounted () {
             this.fetchLinkList()
             document.body.classList.remove('bg-dark')
         }

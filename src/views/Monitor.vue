@@ -1,7 +1,9 @@
 <template>
     <div id="monitor" class="monitor container-fluid">
         <div class="row" v-for="(row, index) in playlist" :key="index">
-            <youtube-player :src="link" v-for="(link, innerIndex) in row" :key="innerIndex"/>
+            <div v-for="(link, index) in row" :key="index">
+                <youtube-player :src="link"/>
+            </div>
         </div>
     </div>
 </template>
@@ -15,21 +17,21 @@
         components: {
             YoutubePlayer
         },
-        data() {
+        data () {
             return {
                 playlist: []
             }
         },
         methods: {
             // 获取播放列表
-            fetchPlaylist() {
+            fetchPlaylist () {
                 playlist().then(res => {
                     let data = res.data
                     this.playlist = data.playlist
                 })
             }
         },
-        mounted() {
+        mounted () {
             this.fetchPlaylist()
             document.body.classList.add('bg-dark')
         }
