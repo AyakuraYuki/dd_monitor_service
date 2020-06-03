@@ -7,7 +7,10 @@
                         <b-button block variant="primary" @click="fetchLinkList">Refresh</b-button>
                     </b-nav-item>
                     <b-nav-item class="p-1">
-                        <b-button v-b-modal.edit-link block variant="success" @click="createLink">
+                        <!--<b-button v-b-modal.edit-link block variant="success" @click="createLink">-->
+                        <!--    Add Stream-->
+                        <!--</b-button>-->
+                        <b-button block variant="success" @click="$_edit_handleShowDialog()">
                             Add Stream
                         </b-button>
                     </b-nav-item>
@@ -31,10 +34,15 @@
 
                 <b-table striped borderless responsive="sm" :items="links" :fields="fields" head-variant="dark">
                     <template v-slot:cell(options)="link">
-                        <b-button v-b-modal.edit-link
-                                  size="sm"
+                        <!--<b-button v-b-modal.edit-link-->
+                        <!--          size="sm"-->
+                        <!--          class="btn-sm bg-info text-light border-0"-->
+                        <!--          @click="updateLink(link.item)">Edit-->
+                        <!--</b-button>-->
+                        <!--&nbsp;-->
+                        <b-button size="sm"
                                   class="btn-sm bg-info text-light border-0"
-                                  @click="updateLink(link.item)">Edit
+                                  @click="$_edit_handleShowDialog(link.item)">Edit
                         </b-button>
                         &nbsp;
                         <b-button size="sm"
@@ -45,25 +53,28 @@
                 </b-table>
             </main>
 
-            <modal-edit-link @update:linkList="fetchLinkList"
-                             :item="modalEdit.item"
-                             :method="modalEdit.method"/>
+            <!--<modal-edit-link @update:linkList="fetchLinkList"-->
+            <!--                 :item="modalEdit.item"-->
+            <!--                 :method="modalEdit.method"/>-->
+            <edit-link :show="editDetail$.show"
+                       :edit="editDetail$.edit"
+                       @success="fetchLinkList"
+                       @close="$_edit_handleCloseDialog"/>
             <modal-save-link-by-channel @update:linkList="fetchLinkList"/>
         </div>
     </div>
 </template>
 
 <script>
-    import ModalEditLink from "../components/dashboard/ModalEditLink"
     import ModalSaveLinkByChannel from "../components/dashboard/ModalSaveLinkByChannel"
     import { deleteLink, linkList } from "../api/dashboard"
-    import { REQUEST_POST, REQUEST_PUT } from "../api/api"
     import EditMixin from "../mixin/edit"
+    import EditLink from "../components/fragment/EditLink"
 
     export default {
         name: "Dashboard",
         components: {
-            ModalEditLink,
+            EditLink,
             ModalSaveLinkByChannel
         },
         data () {
@@ -101,16 +112,16 @@
                     this.fetchLinkList()
                 })
             },
-            editLink (item, method) {
-                this.modalEdit.item = item
-                this.modalEdit.method = method
-            },
-            createLink () {
-                this.editLink(undefined, REQUEST_POST)
-            },
-            updateLink (item) {
-                this.editLink(item, REQUEST_PUT)
-            }
+            // editLink (item, method) {
+            //     this.modalEdit.item = item
+            //     this.modalEdit.method = method
+            // },
+            // createLink () {
+            //     this.editLink(undefined, REQUEST_POST)
+            // },
+            // updateLink (item) {
+            //     this.editLink(item, REQUEST_PUT)
+            // }
         },
         mounted () {
             this.fetchLinkList()
