@@ -7,9 +7,7 @@
                         <b-button block variant="primary" @click="fetchLinkList">Refresh</b-button>
                     </b-nav-item>
                     <b-nav-item class="p-1">
-                        <!--<b-button v-b-modal.edit-link block variant="success" @click="createLink">-->
-                        <!--    Add Stream-->
-                        <!--</b-button>-->
+                        <!--<b-button v-b-modal.edit-link block variant="success" @click="createLink">Add Stream</b-button>-->
                         <b-button block variant="success" @click="$_edit_handleShowDialog()">
                             Add Stream
                         </b-button>
@@ -34,11 +32,7 @@
 
                 <b-table striped borderless responsive="sm" :items="links" :fields="fields" head-variant="dark">
                     <template v-slot:cell(options)="link">
-                        <!--<b-button v-b-modal.edit-link-->
-                        <!--          size="sm"-->
-                        <!--          class="btn-sm bg-info text-light border-0"-->
-                        <!--          @click="updateLink(link.item)">Edit-->
-                        <!--</b-button>-->
+                        <!--<b-button v-b-modal.edit-link size="sm" class="btn-sm bg-info text-light border-0" @click="updateLink(link.item)">Edit</b-button>-->
                         <!--&nbsp;-->
                         <b-button size="sm"
                                   class="btn-sm bg-info text-light border-0"
@@ -53,9 +47,7 @@
                 </b-table>
             </main>
 
-            <!--<modal-edit-link @update:linkList="fetchLinkList"-->
-            <!--                 :item="modalEdit.item"-->
-            <!--                 :method="modalEdit.method"/>-->
+            <!--<modal-edit-link @update:linkList="fetchLinkList" :item="modalEdit.item" :method="modalEdit.method"/>-->
             <edit-link :show="editDetail$.show"
                        :edit="editDetail$.edit"
                        @success="fetchLinkList"
