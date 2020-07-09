@@ -20,10 +20,10 @@
   },
   "homepage": "https://github.com/AyakuraYuki/dd_monitor#readme",
   "devDependencies": {
-    "asar": "^2.0.1",
-    "cross-env": "^5.2.1",
-    "electron": "^6.0.8",
-    "electron-builder": "^21.2.0"
+    "asar": "^3.0.3",
+    "cross-env": "^7.0.2",
+    "electron": "^9.0.2",
+    "electron-builder": "^22.7.0"
   },
   "build": {
     "productName": "DD Monitor",
